@@ -1,0 +1,276 @@
+
+<!-- Koła i opony-->
+<div class="wheel-title" xmlns="http://www.w3.org/1999/html">
+    KOŁA
+</div>
+
+<!-- Wiersz 1/2- koła i piasty-->
+<div class="fields-grid fields-grid-wheels">
+
+    <div class="field">
+
+        <label for="wheel_size">ROZMIAR KOŁA</label>
+
+        <select name="wheel_size" id="wheel_size" required>
+
+            {% set wheel_sizes = [
+                ('20', '20"'),
+                ('24', '24"'),
+                ('26', '26"'),
+                ('27_5', '27,5"'),
+                ('28', '28"'),
+                ('29', '29"')
+            ] %}
+
+            {% set selected_wheel_size = form_data.get('wheel_size', bike['wheel_size'] if bike else '') %}
+
+            <option value="" {% if not selected_wheel_size %}selected{% endif %}>
+                Wybierz
+            </option>
+
+            {% for value, label in wheel_sizes %}
+
+                {% if selected_wheel_size|string == value %}
+                    <option value="{{ value }}" selected="selected">
+                        {{ label }}
+                    </option>
+                {% else %}
+                    <option value="{{ value }}">
+                        {{ label }}
+                    </option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+    <!-- PIASTA PRZEDNIA -->
+    <div class="field">
+
+        <label for="front_hub">PIASTA PRZEDNIA **</label>
+
+        <input
+            type="text"
+            name="front_hub"
+            id="front_hub"
+            placeholder="Producent i model"
+            required
+            value="{{ form_data.get('front_hub', bike['front_hub'] if bike else '') }}"
+        >
+    </div>
+    <!-- PIASTA TYLNA -->
+    <div class="field">
+
+        <label for="rear_hub">PIASTA TYLNA **</label>
+
+        <input
+            type="text"
+            name="rear_hub"
+            id="rear_hub"
+            placeholder="Producent i model"
+            required
+            value="{{ form_data.get('rear_hub', bike['rear_hub'] if bike else '') }}"
+        >
+    </div>
+    <div class="wheel-details-row front-hub-details">
+
+        <div class="field">
+
+            <label for="front_hub_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="front_hub_replacement_date"
+                id="front_hub_replacement_date"
+                value="{{ form_data.get('front_hub_replacement_date',
+                 bike['front_hub_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="field">
+
+            <label for="front_hub_mileage">PRZEBIEG [km]</label>
+
+            <input
+                type="number"
+                name="front_hub_mileage"
+                id="front_hub_mileage"
+                min="0"
+                placeholder="np. 2000"
+                value="{{ form_data.get('front_hub_mileage', bike['front_hub_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+    <div class="wheel-details-row rear-hub-details">
+
+        <div class="field">
+
+            <label for="rear_hub_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="rear_hub_replacement_date"
+                id="rear_hub_replacement_date"
+                value="{{ form_data.get('rear_hub_replacement_date',
+                 bike['rear_hub_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="field">
+
+            <label for="rear_hub_mileage">PRZEBIEG [km]</label>
+
+            <input
+                type="number"
+                name="rear_hub_mileage"
+                id="rear_hub_mileage"
+                min="0"
+                placeholder="np. 2000"
+                value="{{ form_data.get('rear_hub_mileage', bike['rear_hub_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+</div>
+<!-- Wiersz 3- tytuł opon -->
+<div class="tires-title">
+    OPONY
+</div>
+<!-- Wiersz 4/7 opony przód i tył -->
+<div class="fields-grid fields-grid-tires">
+
+    <div class="field">
+
+        <label for="tire_brand">PRODUCENT OPONY PRZEDNIEJ **</label>
+
+        <input
+            type="text"
+            name="tire_brand"
+            id="tire_brand"
+            placeholder="np. Continental"
+            required
+            value="{{ form_data.get('tire_brand', bike['tire_brand'] if bike else '') }}"
+        >
+    </div>
+    <!-- MODEL OPONY PRZEDNIEJ -->
+    <div class="field">
+
+        <label for="tire_model">MODEL OPONY PRZEDNIEJ **</label>
+
+        <input
+            type="text"
+            name="tire_model"
+            id="tire_model"
+            placeholder="np. Terra Trail"
+            required
+            value="{{ form_data.get('tire_model', bike['tire_model'] if bike else '') }}"
+        >
+    </div>
+    <!-- SZEROKOŚĆ OPONY PRZEDNIEJ -->
+    <div class="field">
+
+        <label for="tire_width">SZEROKOŚĆ OPONY PRZEDNIEJ [mm]</label>
+
+        <input
+            type="number"
+            name="tire_width"
+            id="tire_width"
+            min="1"
+            placeholder="np. 40"
+            value="{{ form_data.get('tire_width', bike['tire_width'] if bike else '') }}"
+        >
+    </div>
+    <!-- Data i przebieg opona przód -->
+    <div class="tire-details-row front-tire-details">
+
+        <div class="field">
+
+            <label for="tire_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="tire_replacement_date"
+                id="tire_replacement_date"
+                value="{{ form_data.get('tire_replacement_date', bike['tire_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="field">
+
+            <label for="tire_mileage">PRZEBIEG [km]</label>
+
+            <input
+                type="number"
+                name="tire_mileage"
+                id="tire_mileage"
+                min="0"
+                placeholder="np. 2000"
+                value="{{ form_data.get('tire_mileage', bike['tire_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+    <!-- Opona tył -->
+    <div class="field">
+
+        <label for="rear_tire_brand">PRODUCENT OPONY TYLNEJ **</label>
+
+        <input
+            type="text"
+            name="rear_tire_brand"
+            id="rear_tire_brand"
+            placeholder="np. Continental"
+            value="{{ form_data.get('rear_tire_brand', bike['rear_tire_brand'] if bike else '') }}"
+        >
+    </div>
+    <!-- MODEL OPONY TYLNEJ -->
+    <div class="field">
+
+        <label for="rear_tire_model">MODEL OPONY TYLNEJ **</label>
+
+        <input
+            type="text"
+            name="rear_tire_model"
+            id="rear_tire_model"
+            placeholder="np. Terra Trail"
+            value="{{ form_data.get('rear_tire_model', bike['rear_tire_model'] if bike else '') }}"
+        >
+    </div>
+    <!-- SZEROKOŚĆ OPONY TYLNEJ -->
+    <div class="field">
+
+        <label for="rear_tire_width">SZEROKOŚĆ OPONY TYLNEJ [mm]</label>
+
+        <input
+            type="number"
+            name="rear_tire_width"
+            id="rear_tire_width"
+            min="1"
+            placeholder="np. 40"
+            value="{{ form_data.get('rear_tire_width', bike['rear_tire_width'] if bike else '') }}"
+        >
+    </div>
+    <!-- Data i przebieg opony tył-->
+    <div class="tire-details-row rear-tire-details">
+
+        <div class="field">
+
+            <label for="rear_tire_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="rear_tire_replacement_date"
+                id="rear_tire_replacement_date"
+                value="{{ form_data.get('rear_tire_replacement_date',
+                 bike['rear_tire_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="field">
+
+            <label for="rear_tire_mileage">PRZEBIEG [km]</label>
+
+            <input
+                type="number"
+                name="rear_tire_mileage"
+                id="rear_tire_mileage"
+                min="0"
+                placeholder="np. 2000"
+                value="{{ form_data.get('rear_tire_mileage', bike['rear_tire_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+</div>
+<span style="color: white;">**Pola obowiązkowe. Pola dat i przebiegów potrzebne do analizy.</span>

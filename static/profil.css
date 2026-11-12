@@ -1,0 +1,568 @@
+
+* {
+    box-sizing: border-box;
+}
+
+/* Główna ramka profilu */
+.profile-container {
+    width: 450px;
+    margin: 60px auto 0 auto;
+    padding: 35px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 25px;
+    border: 3px solid cyan;
+}
+
+/* wspólne dla tytułów */
+.users-container .profile-title,
+.profile-title {
+    margin-top: 0;
+    margin-bottom: 30px;
+    text-align: center;
+    color: darkgreen;
+}
+
+/* Tytuł  */
+.profile-title {
+    font-size: 32px;
+}
+
+/* Pojedyncze pole formularza */
+.profile-field {
+    margin-bottom: 22px;
+
+}
+
+/* Nazwa pola */
+.profile-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: black;
+}
+
+/* Pole tekstowe / email / hasło */
+.profile-field input {
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 2px solid cyan;
+    border-radius: 25px;
+    font-size: 16px;
+    color: black;
+}
+
+.profile-field input::placeholder {
+    color: darkslategray;
+}
+
+/* Nazwa użytkownika jest tylko do odczytu */
+.profile-field input:disabled {
+    color: darkslategray;
+    cursor: not-allowed;
+}
+
+/* Wspólne ustawienia komunikatów */
+.error,
+.success {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 25px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Komunikat błędu */
+.error {
+    background-color: mistyrose;
+    color: red;
+}
+
+/* Komunikat powodzenia */
+.success {
+    background-color: palegreen;
+    color: green;
+}
+
+/* Kontener przycisków ZAPISZ / ANULUJ */
+.buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* wspolne dla przycisków */
+.save-button,
+.cancel-button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 25px;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+/* Przycisk zapisz */
+.save-button {
+    border: none;
+    background-color: limegreen;
+    cursor: pointer;
+}
+
+.save-button:hover {
+    background-color: forestgreen;
+}
+
+/* ANULUJ */
+.cancel-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: mediumpurple;
+    text-decoration: none;
+}
+
+.cancel-button:hover {
+    background-color: purple;
+}
+
+/* Administrator  */
+
+/* wspólny formularz przycisków */
+.users-form,
+.users-cancel-form {
+    width: 150px;
+    margin-left: 40px;
+}
+
+/* Formularz przycisku */
+.users-form {
+    margin-top: 15px;
+}
+
+/* Formularz przycisku ANULUJ */
+.users-cancel-form {
+    margin-top: 8px;
+}
+
+/* wspólne dla przycisków */
+.users-button,
+.users-cancel-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+}
+
+/* Przycisk Uzytkownicy*/
+.users-button {
+    background-color: blue;
+}
+
+.users-button:hover {
+    background-color: darkblue;
+}
+
+/* Przycisk ANULUJ */
+.users-cancel-button {
+    background-color: mediumpurple;
+}
+
+.users-cancel-button:hover {
+    background-color: purple;
+}
+
+/*Ramka listy użytkowników*/
+
+/* Główna ramka zawierająca tabelę użytkowników */
+.users-container {
+    width: 90%;
+    max-width: 1500px;
+    max-height: 70vh;
+    overflow-y: auto;
+    margin: 5px auto 0 auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 25px;
+    border: 3px solid cyan;
+}
+
+/* pasek przewijania na koncie admina */
+.users-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.users-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+}
+
+.users-container::-webkit-scrollbar-thumb {
+    background: cyan;
+    border-radius: 25px;
+}
+
+.users-container::-webkit-scrollbar-thumb:hover {
+    background: darkcyan;
+}
+
+/* Tytuł */
+.users-container .profile-title {
+    font-size: 30px;
+}
+
+/* Układ przycisków i ramki użytkowników */
+.users-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 100px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* Lewa kolumna z przyciskami */
+.users-sidebar {
+    flex: 0 0 190px;
+}
+
+/* Ramka użytkowników */
+.users-layout .users-container {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+/* FILTRY UŻYTKOWNIKÓW*/
+/* Główny kontener filtrów */
+.users-filter-form {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 15px;
+    width: auto;
+    margin: 0 auto 25px auto;
+    padding: 15px 20px;
+    background-color: rgba(0, 0, 0, 0.45);
+    border-radius: 25px;
+    border: 2px solid cyan;
+}
+
+/* Pojedyncze pole filtra */
+.filter-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 160px;
+}
+
+/* Nazwa pola filtra */
+.filter-field label {
+    margin-bottom: 6px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Pola tekstowe, wybór roli i daty */
+.filter-field input,
+.filter-field select {
+    width: 160px;
+    height: 38px;
+    padding: 7px 10px;
+    border: 1px solid cyan;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.4);
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Kontener przycisków FILTRUJ / WYCZYŚĆ */
+.filter-buttons {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+/* wspólne dla przycisków */
+.filter-button,
+.clear-filter-button {
+    width: 110px;
+    height: 38px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* FILTRUJ */
+.filter-button {
+    background-color: limegreen;
+}
+
+.filter-button:hover {
+    background-color: forestgreen;
+}
+
+/* WYCZYŚĆ */
+.clear-filter-button {
+    background-color: mediumpurple;
+}
+
+.clear-filter-button:hover {
+    background-color: darkviolet;
+}
+
+/* Brak użytkowników*/
+.no-users {
+    padding: 25px;
+    color: black;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/*TABELA UŻYTKOWNIKÓW */
+/* Nagłówek tabeli i wszystkie wiersze */
+.users-header,
+.users-row {
+    display: grid;
+    grid-template-columns:1.2fr 2fr 1.2fr 1.5fr 0.9fr 0.9fr 0.9fr 0.9fr 1.2fr;
+    gap: 15px;
+    align-items: center;
+    text-align: center;
+}
+
+/* Nagłówek tabeli */
+.users-header {
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.45);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 25px;
+    border: 1px solid cyan;
+}
+
+/* Pojedynczy użytkownik */
+.users-row {
+    padding: 12px;
+    margin-top: 8px;
+    background-color: rgba(255, 255, 255, 0.45);
+    color: black;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid cyan;
+}
+
+/* Zawartość poszczególnych komórek */
+.users-row > div {
+    text-align: center;
+}
+
+/* Lista wyboru roli */
+.role-select {
+    width: 100%;
+    padding: 7px;
+    border: 1px solid cyan;
+    border-radius: 25px;
+    font-size: 14px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Wspólne ustawienia przycisków */
+.edit-user-button,
+.delete-user-button,
+.save-user-button,
+.cancel-user-button {
+    width: 100%;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* EDYTUJ */
+.edit-user-button {
+    background-color: blue;
+}
+.edit-user-button:hover {
+    background-color: darkblue;
+}
+
+/* USUŃ */
+.delete-user-button {
+    background-color: tomato;
+}
+
+.delete-user-button:hover {
+    background-color: firebrick;
+}
+
+/* ZAPISZ */
+.save-user-button {
+    background-color: limegreen;
+}
+
+.save-user-button:hover {
+    background-color: forestgreen;
+}
+
+/* ANULUJ */
+.cancel-user-button {
+    background-color: mediumpurple;
+}
+
+.cancel-user-button:hover {
+    background-color: darkviolet;
+}
+
+/* Kontener potwierdzenia usunięcia */
+.delete-confirmation {
+    text-align: center;
+}
+
+/* Tekst pytania */
+.delete-confirmation p {
+    margin: 0 0 10px 0;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Kontener przycisków TAK / NIE */
+.delete-confirmation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* wspólne ustawienia przycisków */
+.confirm-delete-button,
+.cancel-delete-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* TAK */
+.confirm-delete-button {
+    background-color: limegreen;
+}
+
+.confirm-delete-button:hover {
+    background-color: forestgreen;
+}
+
+/* NIE */
+.cancel-delete-button {
+    background-color: mediumpurple;
+}
+
+.cancel-delete-button:hover {
+    background-color: darkviolet;
+}
+
+/*Usuwanie konta */
+/* Kontener sekcji */
+.delete-account-section {
+    margin-top: 25px;
+    text-align: center;
+}
+
+/* Wspólne ustawienia przycisków TAK / NIE oraz usunięcia konta */
+.confirm-delete-account-button,
+.delete-account-button,
+.cancel-delete-account-button {
+    padding: 9px 20px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Przycisk USUŃ KONTO */
+.delete-account-button {
+    background-color: tomato;
+}
+
+.delete-account-button:hover {
+    background-color: firebrick;
+}
+
+/* TAK */
+.confirm-delete-account-button {
+    margin-right: 10px;
+    background-color: limegreen;
+}
+
+.confirm-delete-account-button:hover {
+    background-color: forestgreen;
+}
+
+/* NIE */
+.cancel-delete-account-button {
+    background-color: mediumpurple;
+}
+
+.cancel-delete-account-button:hover {
+    background-color: darkviolet;
+}
+
+/* Pytanie o potwierdzenie */
+.delete-account-question {
+    margin-bottom: 15px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Status konta */
+.account-active {
+    color: lawngreen;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.account-blocked {
+    color: firebrick;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/* Blokowanie i odblokowywanie konta */
+.block-user-button {
+    padding: 7px 10px;
+    border: none;
+    border-radius: 25px;
+    background-color: dodgerblue;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.block-user-button:hover {
+    background-color: mediumblue;
+}

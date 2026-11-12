@@ -1,0 +1,345 @@
+
+/* Główna ramka historii */
+.ride_container_history {
+    width: 85%;
+    max-width: 1300px;
+    margin: 20px auto;
+    padding: 25px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 25px;
+    border: 2px solid cyan;
+    box-sizing: border-box;
+}
+
+/* Tytuł */
+.ride_container_history h2 {
+    margin: 0 0 20px 0;
+    color: darkgreen;
+    text-align: center;
+}
+
+/* Filtr historii */
+.ride-history-filter {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 15px;
+    width: auto;
+    margin: 0 auto 25px auto;
+    padding: 15px 20px;
+    background-color: rgba(0, 0, 0, 0.45);
+    border-radius: 25px;
+    border: 2px solid cyan;
+}
+
+/* Pole filtra */
+.history-filter-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Etykieta */
+.history-filter-field label {
+    margin-bottom: 6px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Pole tekstowe */
+.history-filter-field input {
+    width: 200px;
+    height: 38px;
+    padding: 7px 10px;
+    border: 1px solid cyan;
+    border-radius: 25px;
+    font-size: 14px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* Pole liczbowe */
+.history-filter-field input[type="number"] {
+    width: 130px;
+}
+
+/* Przyciski */
+.history-filter-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.history-filter-button,
+.history-clear-button {
+    width: 110px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Filtruj */
+.history-filter-button {
+    background-color: limegreen;
+}
+
+.history-filter-button:hover {
+    background-color: forestgreen;
+}
+
+/* Wyczyść */
+.history-clear-button {
+    background-color: mediumpurple;
+}
+
+.history-clear-button:hover {
+    background-color: darkviolet;
+}
+
+/* Brak wyników */
+.no-rides {
+    grid-column: 1 / -1;
+    width: 100%;
+    padding: 20px;
+    color: black;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* Lista historii */
+.ride-history-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 5px;
+    justify-items: center;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* pasek przewijania */
+.ride-history-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Tło paska */
+.ride-history-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+}
+
+/* Uchwyt paska */
+.ride-history-list::-webkit-scrollbar-thumb {
+    background: cyan;
+    border-radius: 25px;
+}
+
+/* Efekt po najechaniu kursorem */
+.ride-history-list::-webkit-scrollbar-thumb:hover {
+    background: darkcyan;
+}
+
+/* Szczegóły po otwarciu */
+
+/*Po otwarciu jednego przejazdu ukrywamypozostałe miniaturki.*/
+.ride-history-list:has(.ride_details[open])
+.ride-history-item {
+    display: none;
+}
+
+/*Otwarty przejazd zajmuje całą szerokość listy.*/
+.ride-history-list:has(.ride_details[open])
+.ride-history-item:has(.ride_details[open]),
+.ride_details {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+.ride_details {
+    position: relative;
+}
+
+.ride-history-list:has(.ride_details[open])
+.ride-history-item:has(.ride_details[open]) {
+    grid-column: 1 / -1;
+    justify-self: center;
+}
+
+/* Miniatura otwartego przejazdu */
+.ride-history-list:has(.ride_details[open])
+.ride-history-item:has(.ride_details[open])
+summary {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+/* Szczegóły otwartego przejazdu */
+.ride-history-list:has(.ride_details[open])
+.ride_details {
+    width: 100%;
+    grid-column: 1 / -1;
+}
+
+/* Pojedynczy element historii */
+.ride-history-item {
+    width: 150px;
+    text-align: center;
+}
+
+/* Usunięcie domyślnego znacznika */
+.ride_details summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+.ride_details summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Szczegóły przejazdu */
+.ride_details_content {
+    width: 85%;
+    max-width: 1000px;
+    margin: 25px auto 0 auto;
+    padding: 30px 40px;
+    background-color: rgba(0, 0, 0, 0.45);
+    border-radius: 25px;
+    text-align: left;
+    border: 1px solid cyan;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 30px;
+    align-items: start;
+}
+
+/*Po otwarciu szczegółów treść zostaje przesunięta do drugiej kolumny.*/
+.ride-history-list:has(.ride_details[open])
+.ride_details_content {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+
+/* Tytuł szczegółów */
+.ride_details_content h3 {
+    margin-top: 0;
+    color: lawngreen;
+    text-align: center;
+}
+
+/* Informacje o przejeździe */
+.ride_details_row {
+    margin: 8px 0;
+}
+
+/* Nazwa informacji */
+.ride_details_row strong {
+    display: inline-block;
+    margin-right: 20px;
+    color: lightblue;
+}
+
+/* Wartość informacji */
+.ride_details_row span {
+    color: lightyellow;
+    font-weight: bold;
+}
+
+/* Miniaturka przejazdu */
+.ride-thumbnail {
+    position: relative;
+    width: 150px;
+    margin: 0 auto;
+}
+
+/* Obrazek */
+.ride-thumbnail img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Przezroczystość obrazka */
+.nonemaps-image {
+    opacity: 0.6;
+}
+
+/* Odległość wyświetlana na miniaturze */
+.ride-distance {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* Nazwa przejazdu */
+.ride-name {
+    margin-top: 8px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    word-break: break-word;
+}
+
+/* Przycisk usnięcia przejazdu */
+.delete-button {
+    width: 180px;
+    height: 42px;
+    border: none;
+    border-radius: 25px;
+    background-color: tomato;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: firebrick;
+}
+
+/* Formularz usunięcia */
+.delete-form {
+    position: absolute;
+    left: 0;
+    top: 270px;
+    margin: 0;
+}
+
+/* Mapa przejazdu */
+.ride_map {
+    width: 100%;
+    height: 300px;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+/* Obraz mapy */
+.ride_map img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+

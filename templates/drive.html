@@ -1,0 +1,229 @@
+
+<!-- Napęd -->
+<div class="category-title">
+    NAPĘD
+</div>
+
+<div class="fields-grid fields-grid-drive">
+    <!-- Wiersz 1- liczba przełożeń -->
+    <div class="drive-gears-row">
+
+        {% set front_gear_options = [
+            ('1', '1'),
+            ('2', '2'),
+            ('3', '3')
+        ] %}
+
+        {% set selected_front_gears = form_data.get('front_gears', bike['front_gears'] | string if bike else '') %}
+        <!-- ILOŚĆ BLATÓW Z PRZODU -->
+        <div class="field field-compact front-gears-field">
+
+            <label for="front_gears">BLATY Z PRZODU **</label>
+
+            <select name="front_gears" id="front_gears" required>
+
+                <option value="" {% if not selected_front_gears %}selected{% endif %}>
+                    Wybierz
+                </option>
+                {% for value, label in front_gear_options %}
+
+                    {% if selected_front_gears|string == value %}
+                        <option value="{{ value }}" selected="selected">{{ label }}</option>
+                    {% else %}
+                        <option value="{{ value }}">{{ label }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <!-- PRZEŁOŻENIA Z TYŁU -->
+        <div class="field field-compact rear-gears-field">
+
+            <label for="rear_gears">PRZEŁOŻENIA TYŁ</label>
+
+            <input
+                type="number"
+                name="rear_gears"
+                id="rear_gears"
+                min="1"
+                max="15"
+                step="1"
+                required
+                value="{{ form_data.get('rear_gears', bike['rear_gears'] if bike else '') }}"
+            >
+        </div>
+    </div>
+    <!-- Wiersz 2 korba -->
+    <div class="field component-field">
+
+        <div class="component-model">
+
+            <label for="crankset">KORBA **</label>
+
+            <input
+                type="text"
+                name="crankset"
+                id="crankset"
+                placeholder="Producent i model"
+                required
+                value="{{ form_data.get('crankset', bike['crankset'] if bike else '') }}"
+            >
+        </div>
+        <div class="component-item">
+
+            <label for="crankset_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="crankset_replacement_date"
+                id="crankset_replacement_date"
+                value="{{ form_data.get('crankset_replacement_date',
+                 bike['crankset_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="component-item">
+
+            <label for="crankset_mileage">PRZEBIEG OD WYMIANY (KM)</label>
+
+            <input
+                type="number"
+                name="crankset_mileage"
+                id="crankset_mileage"
+                min="0"
+                step="1"
+                placeholder="np. 2000"
+                value="{{ form_data.get('crankset_mileage', bike['crankset_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+    <!-- Wiersz 3- kaseta -->
+    <div class="field component-field">
+
+        <div class="component-model">
+
+            <label for="cassette">KASETA **</label>
+
+            <input
+                type="text"
+                name="cassette"
+                id="cassette"
+                placeholder="Producent i model"
+                required
+                value="{{ form_data.get('cassette', bike['cassette'] if bike else '') }}"
+            >
+        </div>
+        <div class="component-item">
+
+            <label for="cassette_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="cassette_replacement_date"
+                id="cassette_replacement_date"
+                value="{{ form_data.get('cassette_replacement_date',
+                 bike['cassette_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="component-item">
+
+            <label for="cassette_mileage">PRZEBIEG OD WYMIANY (KM)</label>
+
+            <input
+                type="number"
+                name="cassette_mileage"
+                id="cassette_mileage"
+                min="0"
+                step="1"
+                placeholder="np. 2000"
+                value="{{ form_data.get('cassette_mileage', bike['cassette_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+    <!-- Wiersz 4 łańcuch -->
+    <div class="field component-field">
+
+        <div class="component-model">
+
+            <label for="chain">ŁAŃCUCH **</label>
+
+            <input
+                type="text"
+                name="chain"
+                id="chain"
+                placeholder="Producent i model"
+                required
+                value="{{ form_data.get('chain', bike['chain'] if bike else '') }}"
+            >
+        </div>
+        <div class="component-item">
+
+            <label for="chain_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="chain_replacement_date"
+                id="chain_replacement_date"
+                value="{{ form_data.get('chain_replacement_date', bike['chain_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="component-item">
+
+            <label for="chain_mileage">PRZEBIEG OD WYMIANY (KM)</label>
+
+            <input
+                type="number"
+                name="chain_mileage"
+                id="chain_mileage"
+                min="0"
+                step="1"
+                placeholder="np. 2000"
+                value="{{ form_data.get('chain_mileage', bike['chain_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+    <!-- Wiersz 5- support -->
+    <div class="field component-field">
+
+        <div class="component-model">
+
+            <label for="bottom_bracket">SUPPORT **</label>
+
+            <input
+                type="text"
+                name="bottom_bracket"
+                id="bottom_bracket"
+                placeholder="Producent i model"
+                required
+                value="{{ form_data.get('bottom_bracket', bike['bottom_bracket'] if bike else '') }}"
+            >
+        </div>
+        <div class="component-item">
+
+            <label for="bottom_bracket_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="bottom_bracket_replacement_date"
+                id="bottom_bracket_replacement_date"
+                value="{{ form_data.get('bottom_bracket_replacement_date',
+                 bike['bottom_bracket_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="component-item">
+
+            <label for="bottom_bracket_mileage">PRZEBIEG OD WYMIANY (KM)</label>
+
+            <input
+                type="number"
+                name="bottom_bracket_mileage"
+                id="bottom_bracket_mileage"
+                min="0"
+                step="1"
+                placeholder="np. 2000"
+                value="{{ form_data.get('bottom_bracket_mileage', bike['bottom_bracket_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+    <div style="grid-column: 1 / -1; width: 100%; margin-top: 80px">
+        <span style="color: white;">**Pola obowiązkowe. Pola dat i przebiegów potrzebne do analizy.</span>
+    </div>
+</div>

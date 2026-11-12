@@ -1,0 +1,959 @@
+
+* {
+    box-sizing: border-box;
+}
+
+/* Główny układ rower*/
+.bike-layout {
+    width: 94%;
+    max-width: 1600px;
+    margin: 10px auto 40px auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+/* Lista zapisanych rowerów */
+.saved-bikes {
+    width: 200px;
+    flex-shrink: 0;
+    padding-top: 25px;
+}
+
+/*Miniaturki rowerów po zapisie */
+.bike-thumbnail {
+    width: 180px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.bike-thumbnail img {
+    width: 180px;
+    height: 130px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 5px auto;
+    border: 1px solid cyan;
+    border-radius: 25px;
+}
+
+/* Nazwa pod zdjęciem */
+.bike-name {
+    color: firebrick;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: rgba(0, 255, 255, 0.5);
+}
+
+.bike-model {
+    color: firebrick;
+    font-size: 16px;
+    background-color: rgba(0, 255, 255, 0.5);
+}
+
+/* wspólne dla błąd i sukces */
+.error-message,
+.success-message {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 12px;
+    text-align: center;
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+/* Błąd */
+.error-message {
+    background-color: mistyrose;
+    color: red;
+}
+
+/* Sukces */
+.success-message {
+    background-color: palegreen;
+    color: green;
+}
+
+/* Potwierdzenie usunięcia */
+.delete-confirmation {
+    width: 500px;
+    max-width: 90%;
+    margin: 50px auto;
+    padding: 30px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 25px;
+    border: 2px solid cyan;
+}
+
+.delete-confirmation h5 {
+    margin-bottom: 25px;
+    color: darkred;
+    font-size: 20px;
+}
+
+/* Przyciski potwierdzenia usunięcia */
+.confirm-delete-button,
+.cancel-delete-button {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Tak */
+.confirm-delete-button {
+    border: none;
+    background-color: lawngreen;
+    color: white;
+    cursor: pointer;
+}
+
+.confirm-delete-button:hover {
+    background-color: forestgreen;
+}
+
+/* Anulowanie */
+.cancel-delete-button {
+    background-color: mediumpurple;
+    color: white;
+}
+
+.cancel-delete-button:hover {
+    background-color: darkviolet;
+}
+
+/* Ramka formularza*/
+.bike-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    width: 1500px;
+    min-height: 650px;
+    gap: 25px;
+    padding: 25px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 25px;
+    border: 3px solid cyan;
+    position: relative;
+}
+
+/* Komunikaty pod tytułem */
+.bike-container > .error-message,
+.bike-container > .success-message {
+    position: absolute;
+    top: 75px;
+    left: 25px;
+    right: 25px;
+    width: auto;
+    margin: 0;
+    z-index: 2;
+}
+
+/* Tytuł ramki*/
+.bike-title {
+    margin-top: 0;
+    margin-bottom: 12px;
+    text-align: center;
+    color: darkgreen;
+    font-size: 30px;
+    flex-basis: 100%;
+}
+
+/* Układ przycisków i formularza obok siebie */
+.form-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    width: 100%;
+}
+
+/* Kontener obu ramek z przyciskami */
+.form-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 70px;
+    flex-shrink: 0;
+}
+
+/* Ramka przycisków formularza oraz ramka przycisków akcji */
+.frame-button-form,
+.frame-button-action {
+    display: flex;
+    padding: 15px;
+    max-width: 210px;
+    border: 2px solid cyan;
+    border-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+/* Przyciski akcji/ formularzy */
+.button-action,
+.button-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* wspólne dla przycisków */
+.basic-button,
+.edit-save-button,
+.save-button,
+.cancel-button,
+.delete-button {
+    width: 180px;
+    height: 45px;
+    border-radius: 25px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.basic-button,
+.cancel-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Przyciski formularzy */
+.basic-button {
+    background-color: blue;
+}
+
+.basic-button:hover {
+    background-color: darkblue;
+}
+
+/* Edytowanie */
+.edit-save-button {
+    background-color: blue;
+}
+
+.edit-save-button:hover {
+    background-color: darkblue;
+}
+
+/* Zapis */
+.save-button {
+    background-color: limegreen;
+}
+
+.save-button:hover {
+    background-color: forestgreen;
+}
+
+/* Anuluj */
+.cancel-button {
+    background-color: mediumpurple;
+    text-decoration: none;
+}
+
+.cancel-button:hover {
+    background-color: darkviolet;
+}
+
+/* Usuń */
+.delete-button {
+    background-color: tomato;
+}
+
+.delete-button:hover {
+    background-color: firebrick;
+}
+
+/* limit */
+.limit-button {
+    background-color: darkgray;
+    cursor: pointer;
+}
+
+.limit-button:hover {
+    background-color: dimgrey;
+}
+
+ /* ramka dla danych kategorii */
+.form-data {
+    box-sizing: border-box;
+    padding: 20px;
+    width: 1050px;
+    min-height: 550px;
+    border: 2px solid cyan;
+    border-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.45);
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+/* STYLE poszczególnych kategorii */
+
+/* Tytuły kategorii */
+.category-title {
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: bold;
+    color: lawngreen;
+    font-size: 30px;
+    flex-basis: 100%;
+}
+
+/* Uniwersalny układ pól */
+
+/* Głowny kontener pól */
+.fields-grid {
+    --columns: 2;
+    --column-gap: 40px;
+    --row-gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+    column-gap: var(--column-gap);
+    row-gap: var(--row-gap);
+    width: 100%;
+    align-items: start;
+}
+
+/* dla pojedynczego pola */
+
+/* Etykieta nad polem */
+.field label {
+    display: block;
+    width: 100%;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+
+/* dla pól tekstowych i list wybieralnych */
+.field input,
+.field select {
+    box-sizing: border-box;
+    width: 100%;
+    --input-height: 36px;
+    height: var(--input-height);
+    padding: 7px 9px;
+    border: 1px solid cyan;
+    border-radius: 25px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.field input::placeholder {
+    color: black;
+}
+
+/* Dane podstawowe */
+
+/* Szerokości i odstępy */
+.fields-grid-basic {
+    /* szerokość dla marki i modelu */
+    --brand-model-width: 100%;
+    /* szerokość dla konserwacji i typu roweru */
+    --type-maintenance-width: 70%;
+    /* szerokść dla lat i rozmiaru ramy */
+    --frame-years-width: 70%;
+    /* szerodkość dla przebiegu */
+    --mileage-width: 70%;
+    /* odstęp między wierszami */
+    --row-gap: 45px;
+    /* odstęp pól w wierszu */
+    --column-gap: 25px;
+    /* układ główny */
+    --columns: 3;
+}
+
+/* odstęp pod tytułem */
+.form-data .category-title.category-title-basic {
+    margin-bottom: 45px;
+}
+
+/* Wspólne ustawienia dla wszystkich wierszy wierszy */
+.fields-grid-basic .basic-row-first,
+.fields-grid-basic .basic-row-second,
+.fields-grid-basic .basic-row-third,
+.fields-grid-basic .basic-handlebar-row {
+    grid-column: 1 / -1;
+    display: grid;
+    align-items: start;
+}
+
+.fields-grid-basic .basic-row-first,
+.fields-grid-basic .basic-row-second,
+.fields-grid-basic .basic-row-third {
+    column-gap: var(--column-gap);
+    row-gap: 0;
+}
+
+.fields-grid-basic .basic-row-first,
+.fields-grid-basic .basic-row-second {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+}
+
+.fields-grid-basic .basic-row-third {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 65%;
+    max-width: 650px;
+    justify-self: center;
+}
+
+.fields-grid-basic .basic-handlebar-row {
+    grid-template-columns: minmax(0, 1fr);
+    width: 70%;
+    max-width: 400px;
+    justify-self: center;
+}
+
+/* szerokość dla marki i modelu */
+.fields-grid-basic .basic-brand-field,
+.fields-grid-basic .basic-model-field {
+    width: var(--brand-model-width);
+    min-width: 0;
+    justify-self: center;
+}
+
+/* typ roweru */
+.fields-grid-basic .basic-type-field {
+    width: var(--type-maintenance-width);
+    min-width: 0;
+    justify-self: center;
+}
+
+/* rozmiar ramy i daty */
+.fields-grid-basic .basic-frame-field,
+.fields-grid-basic .basic-production-year-field,
+.fields-grid-basic .basic-purchase-year-field {
+    width: var(--frame-years-width);
+    min-width: 0;
+    justify-self: center;
+}
+
+/* wartości liczbowe jako wyśrodkowane */
+.fields-grid-basic #production_year,
+.fields-grid-basic #purchase_year {
+    text-align: center;
+}
+
+/* Przebieg */
+.fields-grid-basic .basic-mileage-field {
+    width: var(--mileage-width);
+    min-width: 0;
+    justify-self: center;
+}
+
+/* Konserwacja */
+.fields-grid-basic .basic-maintenance-field {
+    width: var(--type-maintenance-width);
+    min-width: 0;
+    justify-self: center;
+}
+
+/* Przebieg wyśrodkowanie */
+.fields-grid-basic #initial_mileage {
+    text-align: center;
+}
+
+/* Typ kierownicy szerokość */
+.fields-grid-basic .basic-handlebar-field {
+    width: var(--type-maintenance-width);
+    min-width: 0;
+    justify-self: center;
+}
+
+/* Biegi */
+
+/* Odstęp od tytułu */
+.form-data .category-title.category-title-wheel {
+    margin-bottom: 35px;
+}
+
+/* szerokości */
+.fields-grid-wheel {
+    /* Ogólne */
+    --columns: 2;
+    --column-gap: 30px;
+    --row-gap: 45px;
+    /* szerokość sposobu zmiany biegów */
+    --method-width: 50%;
+    /* szerokość przedniej i tylniej przerzutki */
+    --components-width: 80%;
+    /* szerokość dla pól modelu */
+    --model-width: 100%;
+    /* szerokość dla dat */
+    --date-width: 75%;
+    /* szerokość dla przebiegów */
+    --mileage-width: 75%;
+    /* szerokość mechanizmu zmiany */
+    --mechanism-width: 50%;
+}
+
+/* Ustawienie dla wiersza 1 */
+
+/* Wyśrodkowanie */
+.fields-grid-wheel .shifting-method-row {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+}
+
+/* szerokość pola wyboru */
+.fields-grid-wheel .shifting-method-field {
+    width: var(--method-width);
+    max-width: 350px;
+    min-width: 0;
+    justify-self: center;
+}
+
+/* wspólne dla sekcji przerzutki/ producent / model/ data/ przebieg */
+.fields-grid-wheel .shifting-component,
+.fields-grid-wheel .shifting-detail-field,
+.fields-grid-wheel .shifting-model-field {
+    width: 100%;
+    min-width: 0;
+}
+
+/* sekcja przerzutek */
+.fields-grid-wheel .shifting-component {
+    display: flex;
+    flex-direction: column;
+}
+
+/* szerokść dla inputów */
+.fields-grid-wheel .shifting-model-field input {
+    width: var(--model-width);
+    align-self: center;
+    min-width: 0;
+}
+
+/* Wspólne ustawienia wiersz 2 i 3*/
+.fields-grid-wheel .shifting-components-row,
+.fields-grid-wheel .shifting-details-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--column-gap);
+    width: var(--components-width);
+    max-width: 900px;
+    justify-self: center;
+    align-items: start;
+}
+
+/* daty i przebiegi dla przerzutki */
+.fields-grid-wheel .shifting-details-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 15px;
+    width: 100%;
+    min-width: 0;
+    align-items: start;
+}
+/* wspólna szerokość dat i przebiegu */
+.fields-grid-wheel .shifting-detail-field input[type="date"],
+.fields-grid-wheel .shifting-detail-field input[type="number"] {
+    min-width: 0;
+    box-sizing: border-box;
+    align-self: center;
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 15px;
+}
+
+/* szerokość daty */
+.fields-grid-wheel .shifting-detail-field input[type="date"] {
+    width: var(--date-width);
+}
+
+/* szerokość przebiegu */
+.fields-grid-wheel .shifting-detail-field input[type="number"] {
+    width: var(--mileage-width);
+}
+
+/* wiersz 4 wyśrodkowanie */
+.fields-grid-wheel .shifting-mechanism-row {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+}
+
+/* szerokość dla pola wyboru */
+.fields-grid-wheel .shifting-mechanism-field {
+    width: var(--mechanism-width);
+    max-width: 300px;
+    min-width: 0;
+}
+
+/* wyśrodkowanie dla liczb */
+.fields-grid-wheel #shifting_mileage,
+.fields-grid-wheel #rear_shifting_mileage {
+    text-align: center;
+}
+
+/* Napęd */
+
+/* szerokości */
+.fields-grid-drive {
+        /* ogólne */
+    --columns: 3;
+    --column-gap: 20px;
+    --row-gap: 2px;
+    /* szerokość pól modelu */
+    --model-width: 100%;
+    /* szerokości dat i przebiegu */
+    --date-width: 60%;
+    --mileage-width: 60%;
+    align-items: center;
+}
+
+/* odstęp pod tytułem */
+.form-data .category-title {
+    margin-bottom: 20px;
+}
+
+/* dwa pola obok siebie na środku */
+.fields-grid-drive .drive-gears-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    width: 65%;
+    max-width: 350px;
+    justify-self: center;
+    align-items: start;
+    margin-bottom: 4px;
+}
+
+/* szerokości dla liczby przełożeń */
+.fields-grid-drive .drive-gears-row .field-compact {
+    width: 100%;
+    min-width: 0;
+    justify-self: center;
+}
+
+/* wartości wyśrodkowane */
+.fields-grid-drive #front_gears,
+.fields-grid-drive #rear_gears {
+    text-align: center;
+}
+
+/* cała szerokośc dla każdej części */
+.fields-grid-drive .component-field {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr));
+    column-gap: var(--column-gap);
+    row-gap: 0;
+    align-items: end;
+    width: 100%;
+    min-width: 0;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+/* pola modelu */
+.fields-grid-drive .component-model {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 0;
+    width: 90%;
+}
+
+/* model części */
+.fields-grid-drive .component-model input {
+    width: var(--model-width);
+    min-width: 0;
+    align-self: center;
+}
+
+/* etykiety dla modelu/ daty/ przebiegu */
+.fields-grid-drive .component-model label,
+.fields-grid-drive .component-item label {
+    display: block;
+    width: 100%;
+    margin-bottom: 4px;
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* pola dat/ przebiegu */
+.fields-grid-drive .component-item {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+}
+
+/* wspólne ustawienia dla dat i przebiegów */
+.fields-grid-drive .component-item input[type="date"],
+.fields-grid-drive .component-item input[type="number"] {
+    min-width: 0;
+    align-self: center;
+    box-sizing: border-box;
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 14px;
+}
+
+/* data*/
+.fields-grid-drive .component-item input[type="date"] {
+    width: var(--date-width);
+}
+
+/* przebieg */
+.fields-grid-drive .component-item input[type="number"] {
+    width: var(--mileage-width);
+}
+
+/* Hamulce */
+
+/* ustawienia szerokości i ogólne */
+.fields-grid-brakes {
+    --columns: 3;
+    --column-gap: 20px;
+    --row-gap: 2px;
+    /* szerokość obszaru wiersz 1 */
+    --top-field-width: 100%;
+    --top-row-width: 100%;
+    /* szerokość danych hamulców */
+    --brake-row-width: 85%;
+    /* szerokość dla nazwy podzespołu */
+    --brake-model-width: 100%;
+    /* szerokość dla daty */
+    --brake-date-width: 60%;
+    /* szerokość dla przebiegu */
+    --brake-mileage-width: 60%;
+}
+
+/* odstęp pod tytułem */
+.form-data .category-title.category-title-brakes {
+    margin-bottom: 15px;
+}
+
+/* wspólne dla wszystkich wierszy */
+.fields-grid-brakes .brakes-top-row,
+.fields-grid-brakes .brakes-component-row {
+    grid-column: 1 / -1;
+    display: grid;
+    column-gap: var(--column-gap);
+    max-width: 1000px;
+    justify-self: center;
+}
+
+/* typ/ rodzaj klocków/ obsługa */
+.fields-grid-brakes .brakes-top-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: var(--top-row-width);
+    align-items: start;
+}
+
+/* wspólne szerokości pól wiersz 1 */
+.fields-grid-brakes .brakes-top-row .field {
+    width: var(--top-field-width);
+    min-width: 0;
+    justify-self: center;
+}
+
+/* wiersze od 2-7 + kolumny 1-3/ podzespoły/ nazwy/ daty/ przebiegi */
+.fields-grid-brakes .brakes-component-row {
+    grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr));
+    width: var(--brake-row-width);
+    align-items: end;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+/* wspólny układ dla pól */
+.fields-grid-brakes .brakes-component-row .field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 0;
+}
+
+/* etykiety pól */
+.fields-grid-brakes .brakes-component-row .field label {
+    display: block;
+    width: 100%;
+    min-height: 10px;
+    margin-bottom: 0;
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* wspólne dla dat i przebiegów */
+.fields-grid-brakes .brake-detail-field input[type="date"],
+.fields-grid-brakes .brake-detail-field input[type="number"] {
+    min-width: 0;
+    box-sizing: border-box;
+    align-self: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 15px;
+    text-align: center;
+}
+
+/* kolumna 1 nazwy */
+.fields-grid-brakes .brake-model-field {
+    width: var(--brake-model-width);
+}
+/* kolumna 2 daty */
+.fields-grid-brakes .brake-detail-field input[type="date"] {
+    width: var(--brake-date-width);
+}
+/* kolumna 3 przebiegi */
+.fields-grid-brakes .brake-detail-field input[type="number"] {
+    width: var(--brake-mileage-width);
+}
+
+/* Koła i opony */
+
+/* wspólne dla tytułów sekcji */
+.wheel-title,
+.tires-title {
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: lawngreen;
+}
+
+/* odstęp od tytułu dla kół */
+.wheel-title {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+/* odstęp od tytułu dla opon */
+.tires-title {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+/* wspólny układ główny dla kół i opon*/
+.fields-grid-wheels,
+.fields-grid-tires {
+    /* dla kolumn*/
+    --columns: 3;
+    /* odstępy między kolumnami i wierszami */
+    --column-gap: 30px;
+    --row-gap: 15px;
+}
+
+/* dla kół */
+.fields-grid-wheels {
+    --wheel-field-width: 100%;
+}
+
+/* dla opon */
+.fields-grid-tires {
+    --tire-field-width: 100%;
+}
+
+/* szerokość dla wiersz 1 */
+.fields-grid-wheels > .field {
+    width: var(--wheel-field-width);
+    min-width: 0;
+}
+
+/* szerokość pół: model/producent/ szerokość */
+.fields-grid-tires > .field {
+    width: var(--tire-field-width);
+    min-width: 0;
+}
+
+/* wspólny układ wierszy 2/ 5/ 7 */
+.fields-grid-wheels .wheel-details-row,
+.fields-grid-tires .tire-details-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, var(--details-field-width)));
+    min-width: 0;
+    justify-content: center;
+    column-gap: var(--details-column-gap);
+    align-items: start;
+}
+
+/* układ opon */
+.fields-grid-tires .tire-details-row {
+    width: max-content;
+    /* wyśrodkowane wiersze */
+    grid-column: 1 / -1;
+    justify-self: center;
+}
+
+/* układ danych piast*/
+.fields-grid-wheels .wheel-details-row {
+    width: 100%;
+    align-self: start;
+}
+
+/* dane piasty przedniej */
+.fields-grid-wheels .front-hub-details {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+/* dane piasty tylniej */
+.fields-grid-wheels .rear-hub-details {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+/* dane opony przód */
+.fields-grid-tires .front-tire-details {
+    grid-row: 2;
+}
+
+/* dane opony tył */
+.fields-grid-tires .rear-tire-details {
+    grid-row: 4;
+}
+
+/* wspólne szerokości daty i przebieg */
+.fields-grid-wheels,
+.fields-grid-tires {
+    --details-field-width: 145px;
+    --details-column-gap: 15px;
+}
+
+/* wspólny układ dla pojedynczego pola */
+.fields-grid-wheels .wheel-details-row .field,
+.fields-grid-tires .tire-details-row .field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: var(--details-field-width);
+    min-width: 0;
+    margin-bottom: 0;
+}
+
+/* wygląd pól dat i przebiegu */
+.fields-grid-wheels .wheel-details-row .field input,
+.fields-grid-tires .tire-details-row .field input {
+    text-align: center;
+}
+
+

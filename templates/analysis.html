@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu_bar.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='analysis.css') }}">
+
+    <title>BIKE AI - Analiza</title>
+</head>
+<body>
+    {% include "menu_bar.html" %}
+
+    <main>
+        <div class="analysis-container">
+
+            <!-- Przyciski główne -->
+            <form method="POST" action="{{ url_for('analysis_route') }}" class="users-form-button">
+
+                {% if session["role"] == "admin" %}
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="users_stats"
+                        class="static-users-button"
+                    >
+                        STATYSTYKI UŻYTKOWNIKÓW
+                    </button>
+                {% endif %}
+
+                <button
+                    type="submit"
+                    name="action"
+                    value="rides_stats"
+                    class="static-bikes-button"
+                >
+                    STATYSTYKI PRZEJAZDÓW
+                </button>
+
+                {% if session["role"] == "user" %}
+
+                    <a href="{{ url_for('analysis_route', model=1) }}" class="static-ai-button">
+                        MODEL AI
+                    </a>
+                {% endif %}
+            </form>
+
+            {% if session["role"] == "admin" and show_user_stats %}
+
+                <div class="statistics-frame">
+
+                    <!-- Lewa ramka statystyk -->
+                    <h2 class="title-frame-users">
+                        STATYSTYKI UŻYTKOWNIKÓW
+                    </h2>
+
+                    <div class="statistics-content">
+
+                        <div class="statistics-left">
+
+                            <form method="POST">
+
+                                <div class="section-form">
+
+                                    <div class="label-style">
+
+                                        <label>
+                                            LICZBA UŻYTKOWNIKÓW:
+
+                                            <span class="stat-value">
+                                                {{ statistics.user_count }}
+                                            </span>
+                                        </label>
+                                        <label>
+                                            LICZBA ROWERÓW:
+
+                                            <span class="stat-value">
+                                                {{ statistics.bike_count }}
+                                            </span>
+                                        </label>
+                                        <label>
+                                            ŚR ROWER/ UŻYTKOWNIK:
+
+                                            <span class="stat-value">
+                                                {{ "%.2f"|format(statistics.bike_count / statistics.user_count) }}
+                                            </span>
+                                        </label>
+                                        <label>
+                                            WYKORZYSTANE LIMITY:
+
+                                            <span class="stat-value">
+                                                {{ "%.1f"|format(statistics.bike_count/statistics.limit_count * 100) }}%
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="section-form">
+
+                                    <div class="title-label-style">
+                                        <label>
+                                            TYPY ROWERÓW:
+                                        </label>
+                                    </div>
+                                    <div class="label-style-bike">
+
+                                        <label>
+                                            SZOSA:
+                                            <span class="stat-value">{{ bike_types["road"] }}</span>
+                                        </label>
+                                        <label>
+                                            GRAVEL:
+                                            <span class="stat-value">{{ bike_types["gravel"] }}</span>
+                                        </label>
+                                        <label>
+                                            MTB:
+                                            <span class="stat-value">{{ bike_types["mtb"] }}</span>
+                                        </label>
+                                        <label>
+                                            TREKKINGOWY:
+                                            <span class="stat-value">{{ bike_types["trekkingowy"] }}</span>
+                                        </label>
+                                        <label>
+                                            CROSSOWY:
+                                            <span class="stat-value">{{ bike_types["cross"] }}</span>
+                                        </label>
+                                        <label>
+                                            MIEJSKI:
+                                            <span class="stat-value">{{ bike_types["city"] }}</span>
+                                        </label>
+                                        <label>
+                                            DZIECIĘCY:
+                                            <span class="stat-value">{{ bike_types["kids"] }}</span>
+                                        </label>
+                                        <label>
+                                            INNY:
+                                            <span class="stat-value">{{ bike_types["other"] }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="section-form-diagram">
+
+                            <!-- wyświetlenie wykresów -->
+                            {% if chart_type == "bikes" %}
+                                <img
+                                    src="{{ url_for('bike_types_chart_route', data_type='bikes') }}"
+                                    class="bike-types-chart"
+                                    alt="Wykres typów rowerów"
+                                >
+                            {% elif chart_type == "users" %}
+                                <img
+                                    src="{{ url_for('bike_types_chart_route', data_type='users') }}"
+                                    class="bike-types-chart"
+                                    alt="Wykres użytkowników według typu roweru"
+                                >
+                            {% endif %}
+                        </div>
+
+                        <div class="char-form">
+
+                            <!-- Przyciski wykresów -->
+                            <h3 class="title-diagram">
+                                WYKRESY
+                            </h3>
+
+                            <form method="POST" action="{{ url_for('analysis_route') }}">
+
+                                <button
+                                    class="button-char"
+                                    type="submit"
+                                    name="action"
+                                    value="bike_chart"
+                                >
+                                    % ROWERÓW
+                                </button>
+
+                                <button
+                                    class="button-char"
+                                    type="submit"
+                                    name="action"
+                                    value="user_chart"
+                                >
+                                    % UŻYTKOWNIKÓW
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if show_rides_stats %}
+
+                <div class="statistics-frame">
+
+                    <h2 class="title-frame-users">
+                        STATYSTYKI PRZEJAZDÓW
+                    </h2>
+
+                    <div class="statistics-content">
+
+                        <div class="statistics-left">
+
+                            <form method="POST">
+
+                                <div class="section-form">
+
+                                    <div class="label-style">
+
+                                        <label>
+                                            SUMA PRZEJAZDÓW:
+
+                                            <span class="stat-value">
+                                                {{ statistics.ride_count }}
+                                            </span>
+                                        </label>
+                                        <label>
+                                            CAŁKOWITY DYSTANS:
+
+                                            <span class="stat-value">
+                                                {{ "%.2f"|format(statistics.total_distance) }} km
+                                            </span>
+                                        </label>
+                                        <label>
+                                            ŚREDNI DYSTANS:
+
+                                            <span class="stat-value">
+                                                {{ "%.2f"|format(statistics.average_distance) }} km
+                                            </span>
+                                        </label>
+                                        <label>
+                                            NAJDŁUŻSZY PRZEJAZD:
+
+                                            <span class="stat-value">
+                                                {{ "%.2f"|format(statistics.longest_distance) }} km
+                                            </span>
+                                        </label>
+                                        <label>
+                                            ŚREDNIA PRĘDKOŚĆ:
+
+                                            <span class="stat-value">
+                                                {{ "%.2f"|format(statistics.average_speed) }} km/h
+                                            </span>
+                                        </label>
+                                        <label>
+                                            MAKSYMALNA PRĘDKOŚĆ:
+
+                                            <span class="stat-value">
+                                                {{ "%.2f"|format(statistics.max_speed) }} km/h
+                                            </span>
+                                        </label>
+                                        <label>
+                                            ŚREDNIE PRZEWYŻSZENIE:
+
+                                            <span class="stat-value">
+                                                {{ "%.2f"|format(statistics.average_elevation) }} m
+                                            </span>
+                                        </label>
+                                        <label>
+                                            NAJWYŻSZE PRZEWYŻSZENIE:
+
+                                            <span class="stat-value">
+                                                {{ "%.2f"|format(statistics.highest_elevation) }} m
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="section-form-diagram">
+
+                            <!-- wyświetlenie wykresów przejazdów -->
+                            {% if chart_type == "rides_month" %}
+                                <img
+                                    src="{{ url_for('rides_by_month_chart_route') }}"
+                                    class="bike-types-chart"
+                                    alt="Wykres przejazdów w czasie"
+                                >
+                            {% elif chart_type == "distance" %}
+                                <img
+                                    src="{{ url_for('rides_distribution_chart_route', chart_type='distance') }}"
+                                    class="bike-types-chart"
+                                    alt="Rozkład dystansu przejazdów"
+                                >
+                            {% elif chart_type == "speed" %}
+                                <img
+                                    src="{{ url_for('rides_distribution_chart_route', chart_type='speed') }}"
+                                    class="bike-types-chart"
+                                    alt="Rozkład średniej prędkości"
+                                >
+                            {% elif chart_type == "elevation" %}
+                                <img
+                                    src="{{ url_for('rides_distribution_chart_route', chart_type='elevation') }}"
+                                    class="bike-types-chart"
+                                    alt="Rozkład przewyższenia"
+                                >
+                            {% elif chart_type == "weather" %}
+                                <img
+                                    src="{{ url_for('ride_conditions_chart_route', chart_type='weather') }}"
+                                    class="bike-types-chart"
+                                    alt="Wykres warunków przejazdów"
+                                >
+                            {% elif chart_type == "surface" %}
+                                <img
+                                    src="{{ url_for('ride_conditions_chart_route', chart_type='surface') }}"
+                                    class="bike-types-chart"
+                                    alt="Wykres nawierzchni przejazdów"
+                                >
+                            {% endif %}
+                        </div>
+
+                        <div class="char-form">
+
+                            <h3 class="title-diagram">
+                                WYKRESY
+                            </h3>
+
+                            <form method="POST" action="{{ url_for('analysis_route') }}">
+
+                                <button
+                                    class="button-char"
+                                    type="submit"
+                                    name="action"
+                                    value="rides_month_chart"
+                                >
+                                    PRZEJAZDY W CZASIE
+                                </button>
+
+                                <button
+                                    class="button-char"
+                                    type="submit"
+                                    name="action"
+                                    value="distance_chart"
+                                >
+                                    DYSTANS
+                                </button>
+
+                                <button
+                                    class="button-char"
+                                    type="submit"
+                                    name="action"
+                                    value="speed_chart"
+                                >
+                                    PRĘDKOŚĆ
+                                </button>
+
+                                <button
+                                    class="button-char"
+                                    type="submit"
+                                    name="action"
+                                    value="elevation_chart"
+                                >
+                                    PRZEWYŻSZENIE
+                                </button>
+
+                                <button
+                                    class="button-char"
+                                    type="submit"
+                                    name="action"
+                                    value="weather_chart"
+                                >
+                                    WARUNKI
+                                </button>
+
+                                <button
+                                    class="button-char"
+                                    type="submit"
+                                    name="action"
+                                    value="surface_chart"
+                                >
+                                    NAWIERZCHNIA
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if show_model %}
+                {% include "model.html" %}
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,65 @@
+
+/* rozmieszczenie */
+.content {
+    text-align: center;
+    transform: translateY(-150px);
+}
+
+/* ramka */
+.home-frame {
+    padding: 35px 100px 40px 100px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 25px;
+    border: 3px solid cyan;
+}
+
+/* tytuł*/
+h1 {
+    color: red;
+    font-size: 80px;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: 4px;
+}
+
+/* podtytuł */
+p {
+    color: indigo;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    font-style: italic;
+}
+
+/* wspólne ustawienia przycisków */
+.register-button,
+.login-button {
+    display: inline-block;
+    padding: 14px 35px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+/* przycisk rejestracji */
+.register-button {
+    margin-top: 40px;
+    background-color: red;
+}
+
+.register-button:hover {
+    background-color: darkred;
+}
+
+/* przycisk logowania */
+.login-button {
+    margin-top: 15px;
+    background-color: goldenrod;
+}
+
+.login-button:hover {
+    background-color: darkgoldenrod;
+}

@@ -1,0 +1,75 @@
+
+/* styl rozmieszczenia dla login/ register */
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* styl ramki login/ register */
+.box {
+    width: 400px;
+    padding: 40px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 25px;
+    border: 3px solid cyan;
+    text-align: center;
+}
+
+/* styl napisów dla login/ register */
+h1 {
+    color: gold;
+    margin-bottom: 30px;
+}
+
+/* logo strony login/register */
+.logo {
+    color: red;
+    font-size: 65px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin: 0 0 25px 0;
+}
+
+/* pola do uzupelnienia login/register */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid cyan;
+    border-radius: 25px;
+    font-size: 16px;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+input::placeholder{
+    color: darkslategray;
+}
+
+/* błędy w login/register */
+.error {
+    color: red;
+    background-color: mistyrose;
+    font-weight: bold;
+    margin-bottom: 15px;
+    border-radius: 25px;
+}
+
+/* przycisk glowny login/ register */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: purple;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rebeccapurple;
+}

@@ -1,0 +1,576 @@
+
+/* tło strony */
+body {
+    margin: 0;
+    min-height: 100vh;
+    background-image: url("/static/login.png");
+    background-size: cover;
+    background-position: center 70%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+/* główny kontener strony */
+.message-page {
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(88vh - 100px);
+    padding: 5px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+/* główna ramka wiadomości */
+.message-main-frame {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1600px;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 3px solid cyan;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* nagłóek głównej ramki */
+.message-header {
+    flex-shrink: 0;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+.message-header h1 {
+    margin: 0;
+    color: darkgreen;
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* komunikaty o błędach i sukcesach */
+.message-alert {
+    flex-shrink: 0;
+    padding: 10px 15px;
+    margin-bottom: 12px;
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+.message-alert-error {
+    color: tomato;
+    border: 1px solid firebrick;
+    background: rgba(100, 0, 0, 0.75);
+}
+
+.message-alert-success {
+    color: yellowgreen;
+    border: 1px solid green;
+    background: rgba(30, 60, 0, 0.65);
+}
+
+/* układ dwóch kolumn */
+.message-layout {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(280px, 35%) minmax(0, 1fr);
+    gap: 20px;
+    overflow: hidden;
+}
+
+/* wspólny wygląd prawej i lewej ramki */
+.message-list-panel,
+.message-details-panel {
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 0;
+    border: 2px solid cyan;
+    border-radius: 25px;
+    background: rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+}
+
+/* lewa strona- lista wiadomości */
+.message-list-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.message-panel-header {
+    flex-shrink: 0;
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.9);
+    text-align: center;
+    border-radius: 25px;
+}
+
+/* Tytuł nagłówka*/
+.message-panel-header h2 {
+    margin: 0;
+    color: lawngreen;
+    font-size: 17px;
+    letter-spacing: 1px;
+}
+
+/* wyszukiwarka wiadomości */
+.message-inbox-search-form {
+    flex-shrink: 0;
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.9);
+}
+
+.message-inbox-search-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 8px;
+}
+
+.message-inbox-search-row input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid cyan;
+    border-radius: 25px;
+    outline: none;
+    background: rgba(0, 0, 0, 0.25);
+    color: white;
+    font-size: 13px;
+}
+
+.message-inbox-search-row input::placeholder {
+    color: darkgrey;
+}
+
+.message-inbox-search-row .message-button {
+    padding: 10px 12px;
+    white-space: nowrap;
+}
+
+.message-search-clear {
+    display: inline-block;
+    padding: 9px 10px;
+    background-color: mediumpurple;
+    border-radius: 25px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.message-search-clear:hover {
+    background-color: purple;
+}
+
+/* przewijalna lista wiadomości */
+.message-list-scroll {
+    flex: 1;
+    min-height: 0;
+    padding: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.message-list-item-form {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* pojedyncza wiadomość w liście */
+.message-list-item {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 13px 14px;
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.15);
+    color: mediumturquoise;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.message-list-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: cyan;
+}
+
+.message-item-selected {
+    background: rgba(211, 211, 211, 0.0);
+    border-color: cyan;
+}
+
+/* temat wiadomości */
+.message-list-subject {
+    display: block;
+    width: 100%;
+    margin-bottom: 7px;
+    font-size: 15px;
+    font-weight: normal;
+    overflow-wrap: anywhere;
+}
+
+/* nadawca wiadomości */
+.message-list-sender {
+    display: block;
+    width: 100%;
+    margin-bottom: 8px;
+    color: silver;
+    font-size: 13px;
+    font-weight: normal;
+    overflow-wrap: anywhere;
+}
+
+/* data wiadomości */
+.message-list-date {
+    display: block;
+    color: silver;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+/* wiadomości nie odczytane */
+.message-item-unread .message-list-sender,
+.message-item-unread .message-list-subject,
+.message-item-unread .message-list-date {
+    color: lightcyan;
+    font-weight: bold;
+
+}
+
+/* pusta lista wiadomości */
+.message-empty {
+    padding: 15px;
+    color: aquamarine;
+    text-align: center;
+}
+
+/*  prawy panel szczegóły wiadomości */
+.message-details-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* nagłówek otwartej wiadomości */
+.message-details-header {
+    flex-shrink: 0;
+    padding: 15px 15px;
+    margin: 5px;
+    border-bottom: 5px solid rgba(0, 255, 255, 0.45);
+    border-radius: 25px;
+}
+
+.message-details-header h2 {
+    margin: 0 0 15px 0;
+    color: cyan;
+    font-size: 20px;
+    overflow-wrap: anywhere;
+}
+
+.message-details-meta {
+    color: lightgray;
+    font-size: 12px;
+    margin-left: 15px;
+}
+
+.message-details-meta p {
+    margin: 6px 0;
+}
+
+/* treść wiadomości */
+.message-details-content {
+    flex: 0 0 auto;
+    height: auto;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 10px 30px;
+    color: white;
+    font-size: 15px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* przyciski panelu wiadomości */
+.message-details-actions {
+    flex-shrink: 0;
+    padding: 15px 20px;
+    border-top: 2px solid rgba(0, 255, 255, 0.4);
+}
+
+.message-details-actions form {
+    margin: 0;
+}
+
+.message-button,
+.message-delete-button,
+.message-cancel-button {
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.message-button {
+    padding: 11px 20px;
+    background: yellowgreen;
+    font-weight: bold;
+}
+
+.message-button:hover {
+    background: green;
+}
+
+.message-delete-button {
+    margin-left: 15px;
+    padding: 10px 18px;
+    background-color: tomato;
+
+}
+
+.message-delete-button:hover {
+    background-color: firebrick;
+}
+
+.message-cancel-button {
+    padding: 10px 20px;
+    background: mediumpurple;
+}
+
+.message-cancel-button:hover {
+    background: purple;
+}
+
+.message-reply-actions {
+    display: flex;
+    margin-top: 10px;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.message-cancel-form {
+    display: flex;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+/* formularz odpowiedzi */
+.message-reply-panel {
+    flex-shrink: 0;
+    padding: 20px;
+    border-top: 2px solid rgba(0, 255, 255, 0.4);
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.message-reply-panel h3 {
+    margin: 0 0 15px 0;
+    color: mediumturquoise;
+    font-size: 16px;
+}
+
+/* formularz nowej wiadomości */
+.message-compose-panel {
+    flex-shrink: 0;
+    margin-top: 15px;
+    border: 2px solid cyan;
+    border-radius: 25px;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.message-compose-panel summary {
+    padding: 12px 15px;
+    color: lawngreen;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.message-compose-content {
+    padding: 10px 15px 15px;
+}
+
+/* Domyślny wygląd formularzy wewnątrz panelu. */
+.message-compose-panel form {
+    padding: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Pola formularzy */
+.message-compose-panel label,
+.message-reply-panel label {
+    display: block;
+    margin: 12px 0 6px;
+    color: white;
+    font-size: 14px;
+}
+
+.message-compose-panel input,
+.message-compose-panel textarea,
+.message-compose-panel select,
+.message-reply-panel textarea {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 11px;
+    border: 2px solid cyan;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.4);
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+/* Tekst zastępczy w polu odpowiedzi */
+.message-reply-panel textarea::placeholder {
+    color: black;
+    opacity: 1;
+}
+
+.message-compose-panel textarea,
+.message-reply-panel textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.message-compose-panel .message-button,
+.message-reply-panel .message-button {
+    margin-top: 15px;
+}
+
+/* brak wybranej wiadomości */
+.message-no-selection {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    min-height: 250px;
+    padding: 25px;
+    text-align: center;
+}
+
+.message-no-selection h2 {
+    color: lawngreen;
+    font-size: 20px;
+}
+
+.message-no-selection p {
+    color: snow;
+    line-height: 1.6;
+}
+
+/* pasek przewijania */
+.message-list-scroll::-webkit-scrollbar,
+.message-details-panel::-webkit-scrollbar {
+    width: 10px;
+}
+
+.message-list-scroll::-webkit-scrollbar-track,
+.message-details-panel::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+}
+
+.message-list-scroll::-webkit-scrollbar-thumb,
+.message-details-panel::-webkit-scrollbar-thumb {
+    background: cyan;
+    border-radius: 25px;
+}
+
+.message-list-scroll::-webkit-scrollbar-thumb:hover,
+.message-details-panel::-webkit-scrollbar-thumb:hover {
+    background: darkcyan;
+}
+
+.message-search-row {
+    display: grid;
+    grid-template-columns: minmax(200px, 35%) auto minmax(200px, 1fr);
+    gap: 12px;
+    align-items: center;
+}
+
+.message-search-row input::placeholder {
+    color: black;
+}
+
+.message-search-row input,
+.message-search-row select {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    color: black;
+}
+
+.message-search-row .message-button {
+    margin-top: 0;
+    white-space: nowrap;
+}
+
+/* formularz nowej wiadmości układ admin i user oraz wyszukiwanie user przez admin */
+.message-admin-compose-form,
+.message-user-compose-form,
+.message-search-form {
+    padding: 10px 0 !important;
+    border-top: none !important;
+}
+
+.message-admin-fields,
+.message-user-fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 190px;
+    gap: 20px;
+    align-items: center;
+}
+
+.message-admin-left,
+.message-user-left {
+    min-width: 0;
+}
+
+.message-admin-left input,
+.message-admin-left textarea,
+.message-user-left input,
+.message-user-left textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.message-admin-right,
+.message-user-right {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.message-admin-right {
+    gap: 12px;
+}
+
+.message-admin-right .message-button,
+.message-user-right .message-button {
+    margin-top: 0;
+    width: 100%;
+}
+

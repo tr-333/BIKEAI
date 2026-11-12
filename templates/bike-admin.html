@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu_bar.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='bike-admin.css') }}">
+
+    <title>BIKE AI - Rowery użytkowników</title>
+</head>
+<body>
+    {% include "menu_bar.html" %}
+    <main>
+        <div class="users-bikes-container">
+
+            <h2 class="limits-title">
+                LIMITY ROWERÓW
+            </h2>
+            <form method="POST" action="{{ url_for('bike_route') }}" class="bike-filter-form">
+                <input
+                    type="hidden"
+                    name="action"
+                    value="filter_users"
+                >
+                <div class="bike-filter-field">
+
+                    <label>UŻYTKOWNIK</label>
+
+                    <input
+                        type="text"
+                        name="username_filter"
+                        value="{{ username_filter or '' }}"
+                    >
+                </div>
+                <div class="bike-filter-buttons">
+                    <button
+                        type="submit"
+                        class="bike-filter-button"
+                    >
+                        FILTRUJ
+                    </button>
+                    <button
+                        type="submit"
+                        name="clear_filter"
+                        value="1"
+                        class="bike-clear-button"
+                    >
+                        WYCZYŚĆ
+                    </button>
+                </div>
+            </form>
+            <div class="limits-scroll">
+
+                <div class="limits-table">
+
+                    <div class="limits-header">
+
+                        <div>UŻYTKOWNIK</div>
+                        <div>LICZBA ROWERÓW</div>
+                        <div>LIMIT ROWERÓW</div>
+                        <div>EDYCJA</div>
+                    </div>
+                    {% for user_data in users %}
+
+                        {% if edit_limit_user_id == user_data["id"] %}
+
+                            <form method="POST" action="{{ url_for('bike_route') }}" class="limits-row">
+                                <div>
+                                    {{ user_data["username"] }}
+                                </div>
+                                <div>
+                                    {{ user_data["bike_count"] }}
+                                </div>
+                                <div>
+                                    <input
+                                        type="hidden"
+                                        name="user_id"
+                                        value="{{ user_data['id'] }}"
+                                    >
+                                    <input
+                                        type="number"
+                                        name="bike_limit"
+                                        value="{{ user_data['bike_limit'] }}"
+                                        min="0"
+                                        class="limit-input"
+                                    >
+                                </div>
+                                <div class="limit-edit-buttons">
+
+                                    <button
+                                        type="submit"
+                                        name="action"
+                                        value="save_limit"
+                                        class="save-limit-button"
+                                    >
+                                        ZAPISZ
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        name="action"
+                                        value="cancel_edit_limit"
+                                        class="cancel-limit-button"
+                                    >
+                                        ANULUJ
+                                    </button>
+                                </div>
+                            </form>
+                        {% else %}
+                            <div class="limits-row">
+                                <div>
+                                    {{ user_data["username"] }}
+                                </div>
+                                <div>
+                                    {{ user_data["bike_count"] }}
+                                </div>
+                                <div>
+                                    {{ user_data["bike_limit"] }}
+                                </div>
+                                <div>
+                                    <form method="POST" action="{{ url_for('bike_route') }}">
+                                        <input
+                                            type="hidden"
+                                            name="user_id"
+                                            value="{{ user_data['id'] }}"
+                                        >
+                                        <button
+                                            type="submit"
+                                            name="action"
+                                            value="edit_limit"
+                                            class="edit-limit-button"
+                                        >
+                                            EDYTUJ
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if not users %}
+
+                        <div class="no-bikes">
+                            Brak użytkowników spełniających kryteria.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="limits-summary">
+                <div>
+                    SUMA: {{ users|length }}
+                </div>
+                <div>
+                    {{ users|sum(attribute="bike_count") }}
+                </div>
+                <div>
+                    {{ users|sum(attribute="bike_limit") }}
+                </div>
+                <div>
+                    -
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

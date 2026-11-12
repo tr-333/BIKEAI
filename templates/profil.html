@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu_bar.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='profil.css') }}">
+
+    <title>BIKE AI - Profil</title>
+</head>
+<body>
+    {% include "menu_bar.html" %}
+    <main>
+
+        <!-- ADMINISTRATOR -->
+        {% if session["role"] == "admin" %}
+
+            <div class="users-layout">
+
+                <!-- Przyciski po lewej stronie -->
+                <div class="users-sidebar">
+
+                    <form method="POST" action="{{ url_for('profil') }}" class="users-form">
+                        <input
+                            type="hidden"
+                            name="action"
+                            value="users"
+                        >
+                        <button
+                            type="submit"
+                            class="users-button"
+                        >
+                            UŻYTKOWNICY
+                        </button>
+                    </form>
+
+                    {% if show_users %}
+
+                        <form method="GET" action="{{ url_for('profil') }}" class="users-cancel-form">
+
+                            <button
+                                type="submit"
+                                class="users-cancel-button"
+                            >
+                                ANULUJ
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+
+                <!-- Panel Administratora -->
+                {% if show_users %}
+
+                    <div class="users-container">
+
+                        <h2 class="profile-title">
+                            DANE UŻYTKOWNIKÓW
+                        </h2>
+
+                        <!-- Filtr użytkowników-->
+                        <form method="POST" action="{{ url_for('profil') }}" class="users-filter-form">
+
+                            <input
+                                type="hidden"
+                                name="action"
+                                value="users"
+                            >
+
+                            <div class="filter-field">
+
+                                <label>UŻYTKOWNIK</label>
+
+                                <input
+                                    type="text"
+                                    name="username_filter"
+                                    value="{{ username_filter or '' }}"
+                                >
+                            </div>
+
+                            <div class="filter-field">
+
+                                <label>EMAIL</label>
+
+                                <input
+                                    type="text"
+                                    name="email_filter"
+                                    value="{{ email_filter or '' }}"
+                                >
+                            </div>
+
+                            <div class="filter-field">
+
+                                <label>ROLA</label>
+
+                                <select name="role_filter">
+
+                                    <option value="">
+                                        Wszystkie
+                                    </option>
+
+                                    {% if role_filter == "user" %}
+
+                                        <option value="user" selected>
+                                            user
+                                        </option>
+
+                                    {% else %}
+
+                                        <option value="user">
+                                            user
+                                        </option>
+                                    {% endif %}
+
+                                    {% if role_filter == "admin" %}
+
+                                        <option value="admin" selected>
+                                            admin
+                                        </option>
+                                    {% else %}
+
+                                        <option value="admin">
+                                            admin
+                                        </option>
+                                    {% endif %}
+                                </select>
+                            </div>
+
+                            <div class="filter-field">
+
+                                <label>DATA OD</label>
+
+                                <input
+                                    type="date"
+                                    name="created_from"
+                                    value="{{ created_from or '' }}"
+                                >
+                            </div>
+
+                            <div class="filter-field">
+
+                                <label>DATA DO</label>
+
+                                <input
+                                    type="date"
+                                    name="created_to"
+                                    value="{{ created_to or '' }}"
+                                >
+                            </div>
+
+                            <div class="filter-buttons">
+
+                                <button
+                                    type="submit"
+                                    class="filter-button"
+                                >
+                                    FILTRUJ
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    name="clear_filters"
+                                    value="1"
+                                    class="clear-filter-button"
+                                >
+                                    WYCZYŚĆ
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Tabela -->
+                        <div class="users-table">
+
+                            <div class="users-header">
+
+                                <div>
+                                    UŻYTKOWNIK
+                                </div>
+                                <div>
+                                    EMAIL
+                                </div>
+                                <div>
+                                    WERYFIKACJA
+                                </div>
+                                <div>
+                                    DATA UTWORZENIA
+                                </div>
+                                <div>
+                                    ROLA
+                                </div>
+                                <div>
+                                    EDYCJA
+                                </div>
+                                <div>
+                                    USUWANIE
+                                </div>
+                                <div>
+                                    KONTO
+                                </div>
+                                <div>
+                                    ZABLOKUJ/ODBLOKUJ
+                                </div>
+                            </div>
+
+                            {% for listed_user in users %}
+
+                                {% if edit_user_id == listed_user["id"] %}
+
+                                    <form method="POST" action="{{ url_for('profil') }}" class="users-row">
+
+                                        <div>
+                                            {{ listed_user["username"] }}
+                                        </div>
+                                        <div>
+                                            {{ listed_user["email"] }}
+                                        </div>
+                                        <div>
+                                            {{ listed_user["email_verified"] }}
+                                        </div>
+                                        <div>
+                                            {{ listed_user["created_at"] }}
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="hidden"
+                                                name="user_id"
+                                                value="{{ listed_user['id'] }}"
+                                            >
+                                            <select name="role" class="role-select">
+
+                                                {% if listed_user["role"] == "user" %}
+
+                                                    <option value="user" selected>
+                                                        user
+                                                    </option>
+                                                {% else %}
+
+                                                    <option value="user">
+                                                        user
+                                                    </option>
+                                                {% endif %}
+
+                                                {% if listed_user["role"] == "admin" %}
+
+                                                    <option value="admin" selected>
+                                                        admin
+                                                    </option>
+                                                {% else %}
+
+                                                    <option value="admin">
+                                                        admin
+                                                    </option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <button
+                                                type="submit"
+                                                name="action"
+                                                value="save_role"
+                                                class="save-user-button"
+                                            >
+                                                ZAPISZ
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <button
+                                                type="submit"
+                                                name="action"
+                                                value="cancel_edit"
+                                                class="cancel-user-button"
+                                            >
+                                                ANULUJ
+                                            </button>
+                                        </div>
+                                    </form>
+                                {% else %}
+
+                                    <div class="users-row">
+
+                                        <div>
+                                            {{ listed_user["username"] }}
+                                        </div>
+                                        <div>
+                                            {{ listed_user["email"] }}
+                                        </div>
+                                        <div>
+                                            {{ listed_user["email_verified"] }}
+                                        </div>
+                                        <div>
+                                            {{ listed_user["created_at"] }}
+                                        </div>
+                                        <div>
+                                            {{ listed_user["role"] }}
+                                        </div>
+                                        <div>
+                                            <form method="POST" action="{{ url_for('profil') }}">
+
+                                                <input
+                                                    type="hidden"
+                                                    name="user_id"
+                                                    value="{{ listed_user['id'] }}"
+                                                >
+
+                                                <button
+                                                    type="submit"
+                                                    name="action"
+                                                    value="edit"
+                                                    class="edit-user-button"
+                                                >
+                                                    EDYTUJ
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div>
+
+                                            <!-- Usuwanie -->
+                                            <form method="POST" action="{{ url_for('profil') }}">
+
+                                                <input
+                                                    type="hidden"
+                                                    name="user_id"
+                                                    value="{{ listed_user['id'] }}"
+                                                >
+                                                {% if delete_user_id == listed_user["id"] %}
+
+                                                    <div class="delete-confirmation">
+
+                                                        <p>
+                                                            Czy na pewno chcesz usunąć?
+                                                        </p>
+                                                        <div class="delete-confirmation-buttons">
+
+                                                            <button
+                                                                type="submit"
+                                                                name="action"
+                                                                value="confirm_delete"
+                                                                class="confirm-delete-button"
+                                                            >
+                                                                TAK
+                                                            </button>
+
+                                                            <button
+                                                                type="submit"
+                                                                name="action"
+                                                                value="cancel_delete"
+                                                                class="cancel-delete-button"
+                                                            >
+                                                                NIE
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                {% elif listed_user["role"] != "admin" %}
+
+                                                    <button
+                                                        type="submit"
+                                                        name="action"
+                                                        value="delete_user"
+                                                        class="delete-user-button"
+                                                    >
+                                                        USUŃ
+                                                    </button>
+
+                                                {% else %}
+                                                    <!-- Administratora nie usuwamy z tej listy -->
+                                                    -
+                                                {% endif %}
+                                            </form>
+                                        </div>
+
+                                            <!-- Status konta -->
+                                        <div>
+                                            {% if listed_user["blocked"] == "zablokowany" %}
+
+                                                <span class="account-blocked">
+                                                    ZABLOKOWANE
+                                                </span>
+                                            {% else %}
+                                                <span class="account-active">
+                                                    AKTYWNE
+                                                </span>
+                                            {% endif %}
+                                        </div>
+
+                                                <!-- Blokowanie konta -->
+                                        <div>
+                                            {% if listed_user["role"] != "admin" %}
+
+                                                <form method="POST" action="{{ url_for('profil') }}">
+
+                                                    <input
+                                                        type="hidden"
+                                                        name="user_id"
+                                                        value="{{ listed_user['id'] }}"
+                                                    >
+
+                                                    <button
+                                                        type="submit"
+                                                        name="action"
+                                                        value="toggle_block"
+                                                        class="block-user-button"
+                                                    >
+                                                        {% if listed_user["blocked"] == "zablkowany" %}
+                                                            ODBLOKUJ
+                                                        {% else %}
+                                                            ZABLOKUJ
+                                                        {% endif %}
+                                                    </button>
+                                                </form>
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                            <!-- Brak użytkowników -->
+                            {% if not users %}
+
+                                <div class="no-users">
+                                    Brak użytkowników spełniających kryteria.
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <!-- Profil użytkownika -->
+        {% if not show_users %}
+
+            <div class="profile-container">
+
+                <h2 class="profile-title">
+                    PROFIL
+                </h2>
+
+                {% if error %}
+
+                    <div class="error">
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+                {% if success %}
+
+                    <div class="success">
+                        {{ success }}
+                    </div>
+                {% endif %}
+
+                <!-- Formularz-->
+                <form method="POST" action="{{ url_for('profil') }}">
+
+                    <div class="profile-field">
+
+                        <label>Nazwa użytkownika</label>
+
+                        <input
+                            type="text"
+                            value="{{ user['username'] }}"
+                            disabled
+                        >
+                    </div>
+
+                    <div class="profile-field">
+
+                        <label>Adres email</label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            value="{{ user['email'] }}"
+                            required
+                        >
+                    </div>
+
+                    <div class="profile-field">
+
+                        <label>Hasło</label>
+
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Pozostaw puste, jeśli nie zmieniasz"
+                        >
+                    </div>
+
+                    <div class="buttons">
+
+                        <button
+                            type="submit"
+                            class="save-button"
+                        >
+                            ZAPISZ ZMIANY
+                        </button>
+
+                        <a
+                            href="{{ url_for('menu_bar') }}"
+                            class="cancel-button"
+                        >
+                            ANULUJ
+                        </a>
+                    </div>
+                </form>
+
+                <!--Usuwanie konta -->
+                <div class="delete-account-section">
+
+                    {% if delete_account %}
+
+                        <div class="delete-account-question">
+                            CZY CHCESZ USUNĄĆ SWOJE KONTO?
+                        </div>
+
+                        <form method="POST" action="{{ url_for('profil') }}">
+
+                            <button
+                                type="submit"
+                                name="action"
+                                value="confirm_delete_account"
+                                class="confirm-delete-account-button"
+                            >
+                                TAK
+                            </button>
+
+                            <button
+                                type="submit"
+                                name="action"
+                                value="cancel_delete_account"
+                                class="cancel-delete-account-button"
+                            >
+                                NIE
+                            </button>
+                        </form>
+                    {% else %}
+                        <form method="POST" action="{{ url_for('profil') }}">
+
+                            <button
+                                type="submit"
+                                name="action"
+                                value="delete_account"
+                                class="delete-account-button"
+                            >
+                                USUŃ KONTO
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </main>
+</body>
+</html>

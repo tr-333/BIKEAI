@@ -1,0 +1,12 @@
+/* wspolne tlo dla login, home, register */
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/static/background.png");
+    background-size: cover;
+    background-position: center;
+}

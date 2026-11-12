@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu_bar.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='ride.css') }}">
+
+    <title>BIKE AI - Przejazdy</title>
+</head>
+<body>
+    {% include "menu_bar.html" %}
+    <main>
+        <!-- PRZYCISKI -->
+        <div class="buttons">
+            <a href="{{ url_for('ride_route', add=1) }}" class="add-button">
+                    DODAJ PRZEJAZD
+            </a>
+            <a href="{{ url_for('ride_route', history=1) }}" class="history-button">
+                    HISTORIA
+            </a>
+            <a href="{{ url_for('menu_bar') }}" class="cancel-button">
+                    ANULUJ
+            </a>
+        </div>
+
+        {% if success %}
+            <div class="success-message">
+                {{ success }}
+            </div>
+        {% endif %}
+
+        <!-- Ramka -->
+        {% if show_form %}
+            <div class="ride-container">
+
+                <h2>DODAJ PRZEJAZD</h2>
+
+                <form method="POST" enctype="multipart/form-data" class="ride-form">
+
+                    <div class="ride-sections">
+
+                        <!-- Dane podstawowe -->
+                        <section class="ride-section ride-section-wide">
+
+                            <h3>DANE PODSTAWOWE</h3>
+
+                            <div class="basic-data-grid">
+
+                                <div class="form-group bike-group">
+
+                                    <label for="bike_id">ROWER **</label>
+
+                                    <select name="bike_id" id="bike_id" required>
+
+                                        <option value="">
+                                            Wybierz rower
+                                        </option>
+
+                                        {% for bike in bikes %}
+                                            <option value="{{ bike['id'] }}">
+                                                {{ bike['brand'] }} {{ bike['model'] }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group day-group">
+
+                                    <label for="day">DZIEŃ **</label>
+
+                                    <input
+                                        type="number"
+                                        name="day"
+                                        id="day"
+                                        min="1"
+                                        max="31"
+                                        placeholder="DD"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group month-group">
+
+                                    <label for="month">MIESIĄC **</label>
+
+                                    <input
+                                        type="number"
+                                        name="month"
+                                        id="month"
+                                        min="1"
+                                        max="12"
+                                        placeholder="MM"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group year-group">
+
+                                    <label for="year">ROK **</label>
+
+                                    <input
+                                        type="number"
+                                        name="year"
+                                        id="year"
+                                        min="2000"
+                                        max="2100"
+                                        placeholder="RRRR"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group time-group">
+
+                                    <label for="start_time">START **</label>
+
+                                    <input
+                                        type="time"
+                                        name="start_time"
+                                        id="start_time"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group time-group">
+
+                                    <label for="full_time">CZAS JAZDY **</label>
+
+                                    <input
+                                        type="time"
+                                        name="full_time"
+                                        id="full_time"
+                                        required
+                                    >
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Parametry jazdy -->
+                        <section class="ride-section">
+
+                            <h3>PARAMETRY JAZDY</h3>
+
+                            <div class="ride-parameters-grid">
+
+                                <div class="form-group">
+
+                                    <label for="distance">DYSTANS [KM] **</label>
+
+                                    <input
+                                        type="number"
+                                        name="distance"
+                                        id="distance"
+                                        step="0.1"
+                                        min="0"
+                                        placeholder="np. 84.6"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="elevation">PRZEWYŻSZENIE [M] **</label>
+
+                                    <input
+                                        type="number"
+                                        name="elevation"
+                                        id="elevation"
+                                        min="0"
+                                        placeholder="np. 620"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="avg_speed">ŚREDNIA PRĘDKOŚĆ [KM/H] **</label>
+
+                                    <input
+                                        type="number"
+                                        name="avg_speed"
+                                        id="avg_speed"
+                                        step="0.1"
+                                        min="0"
+                                        placeholder="np. 24.9"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="max_speed">MAKS. PRĘDKOŚĆ [KM/H] **</label>
+
+                                    <input
+                                        type="number"
+                                        name="max_speed"
+                                        id="max_speed"
+                                        step="0.1"
+                                        min="0"
+                                        placeholder="np. 52.4"
+                                        required
+                                    >
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Warunki jazdy -->
+                        <section class="ride-section">
+
+                            <h3>WARUNKI JAZDY</h3>
+
+                            <div class="weather-data-grid">
+
+                                <div class="form-group">
+
+                                    <label for="temperature">TEMPERATURA [°C]</label>
+
+                                    <input
+                                        type="number"
+                                        name="temperature"
+                                        id="temperature"
+                                        step="0.1"
+                                        placeholder="np. 18"
+                                    >
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="humidity">WILGOTNOŚĆ [%]</label>
+
+                                    <input
+                                        type="number"
+                                        name="humidity"
+                                        id="humidity"
+                                        step="0.1"
+                                        placeholder="np. 75"
+                                    >
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="wind">WIATR [KM/H]</label>
+
+                                    <input
+                                        type="number"
+                                        name="wind"
+                                        id="wind"
+                                        step="0.1"
+                                        placeholder="np. 20"
+                                    >
+                                </div>
+                            </div>
+                            <div class="conditions-grid">
+
+                                <!-- WARUNKI POGODOWE -->
+                                <div class="form-group">
+
+                                    <label>POGODA (można kilka)</label>
+
+                                    <div class="multi-options">
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                name="weather"
+                                                value="suche"
+                                            >
+                                            <span>SUCHO</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                name="weather"
+                                                value="deszcz"
+                                            >
+                                            <span>DESZCZ</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                name="weather"
+                                                value="przelotny_deszcz"
+                                            >
+                                            <span>PRZELOTNY DESZCZ</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                name="weather"
+                                                value="mokra"
+                                            >
+                                            <span>MOKRO</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                name="weather"
+                                                value="mgla"
+                                            >
+                                            <span>MGŁA</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                name="weather"
+                                                value="snieg"
+                                            >
+                                            <span>ŚNIEG</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- RODZAJ NAWIERZCHNI -->
+                                <div class="form-group">
+
+                                    <label>NAWIERZCHNIA (można kilka)</label>
+
+                                    <div class="multi-options">
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                name="surface"
+                                                value="asfalt"
+                                            >
+                                            <span>ASFALT</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                name="surface"
+                                                value="szuter"
+                                            >
+                                            <span>SZUTER</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                name="surface"
+                                                value="droga_gruntowa"
+                                            >
+                                            <span>DROGA GRUNTOWA</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                name="surface"
+                                                value="lesna"
+                                            >
+                                            <span>DROGA LEŚNA</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                name="surface"
+                                                value="kostka"
+                                            >
+                                            <span>KOSTKA</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Informacje dodatkowe -->
+                        <section class="ride-section ride-section-wide">
+
+                            <h3>INFORMACJE DODATKOWE</h3>
+
+                            <div class="additional-data">
+
+                                <div class="form-group notes-group">
+
+                                    <label for="notes">UWAGI</label>
+
+                                    <textarea
+                                        name="notes"
+                                        id="notes"
+                                        rows="4"
+                                        placeholder="Np. bardzo mokry szuter, dużo błota, problemy z napędem..."
+                                    >
+                                    </textarea>
+                                </div>
+                                <div class="additional-side">
+
+                                    <div class="ride-name-group">
+
+                                        <label for="ride_name">NAZWA PRZEJAZDU **</label>
+
+                                        <input
+                                            type="text"
+                                            name="ride_name"
+                                            id="ride_name"
+                                            placeholder="np. Gdańsk-Sopot"
+                                            required
+                                        >
+                                    </div>
+                                    <div class="gpx-actions">
+
+                                        <div class="gpx-group">
+
+                                        <label for="gpx_file">PLIK GPX (OPCJONALNIE)</label>
+
+                                        <input
+                                            type="file"
+                                            name="gpx_file"
+                                            id="gpx_file"
+                                            accept=".gpx"
+                                        >
+                                    </div>
+                                    <div class="form-actions">
+                                        <button
+                                            type="submit"
+                                            name="action"
+                                            value="save"
+                                            class="save-button"
+                                        >
+                                            ZAPISZ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </section>
+                    </div>
+                </form>
+                <span style="color: white;">**Pola obowiązkowe. Pozostałe pola potrzebne do analizy.</span>
+            </div>
+        {% endif %}
+
+        <!-- ramka historii-->
+        {% if show_history %}
+
+            {% if confirm_delete %}
+
+                <div class="delete-confirmation">
+
+                    <h3>Czy na pewno chcesz usunąć ten przejazd?</h3>
+
+                    <form method="POST">
+                        <input
+                            type="hidden"
+                            name="action"
+                            value="confirm_delete"
+                        >
+                        <input
+                            type="hidden"
+                            name="ride_id"
+                            value="{{ delete_ride_id }}"
+                        >
+                        <button
+                            type="submit"
+                            class="confirm-delete-button"
+                        >
+                            TAK
+                        </button>
+                        <a
+                            href="{{ url_for('ride_route', history=1) }}"
+                            class="cancel-delete-button"
+                        >
+                            NIE
+                        </a>
+                    </form>
+                </div>
+            {% else %}
+                {% include "history_rides.html" %}
+            {% endif %}
+        {% endif %}
+    </main>
+</body>
+</html>

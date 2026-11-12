@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rejestracja - BikeAI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='common_auth.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+</head>
+<body>
+    <div class="page">
+
+        <h2 class="logo">BIKE AI</h2>
+
+        <div class="box">
+
+            <h1>REJESTRACJA</h1>
+
+            <form method="POST">
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Nazwa użytkownika"
+                    minlength="3"
+                    title="nazwa musi mieć minimum 3 znaki"
+                    required
+                >
+
+                <div class="username-info">
+                    Minimum 3 znaki
+                </div>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Adres e-mail"
+                    required
+                >
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Hasło"
+                    minlength="8"
+                    pattern="(?=.*[0-9])(?=.*[!@#$%^&*(),.?&quot;:{}|&lt;&gt;_\-+=/\\[\]]).{8,}"
+                    title="Hasło musi mieć min 8 znaków, min jeden specjalny, min jedna liczba"
+                    required
+                >
+
+                <div class="password-info">
+                    Minimum 8 znaków, min jedna liczba i min jeden znak specjalny
+                </div>
+
+                <input
+                    type="password"
+                    name="password_confirm"
+                    placeholder="Powtórz hasło"
+                    required
+                >
+
+                {% if error %}
+                    <div class="error">
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+                {% if success %}
+                    <div class="success">
+                        {{ success }}
+                    </div>
+                {% endif %}
+
+                <button
+                    type="submit"
+                >
+                    ZAREJESTRUJ SIĘ
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

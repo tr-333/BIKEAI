@@ -1,0 +1,245 @@
+* {
+    box-sizing: border-box;
+}
+
+/* Ramka rowerów użytkowników */
+.users-bikes-container {
+    width: 90%;
+    max-width: 1400px;
+    margin: 10px auto 0 auto;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 25px;
+    border: 3px solid cyan;
+    }
+
+/* Przewijanie */
+.limits-scroll {
+    max-height: 55vh;
+    overflow-y: auto;
+}
+
+/* pasek przewijania*/
+.limits-scroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+.limits-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+}
+
+.limits-scroll::-webkit-scrollbar-thumb {
+    background: cyan;
+    border-radius: 25px;
+}
+
+.limits-scroll::-webkit-scrollbar-thumb:hover {
+    background: darkcyan;
+}
+
+/* Podsumowanie limitów */
+.limits-summary {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr 1fr;
+    gap: 15px;
+    align-items: center;
+    text-align: center;
+    margin-top: 8px;
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.45);
+    color: white;
+    border-radius: 25px;
+    border: 1px solid cyan;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Tytuł sekcji */
+.limits-title {
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-align: center;
+    color: darkgreen;
+    font-size: 28px;
+}
+
+/* Tabela limitów */
+.limits-table {
+    width: 100%;
+}
+
+/* Układ nagłowka i wierszy */
+.limits-header,
+.limits-row {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr 1fr;
+    gap: 15px;
+    align-items: center;
+    text-align: center;
+}
+
+.limits-header {
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.45);
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 25px;
+    border: 1px solid cyan;
+}
+
+.limits-row {
+    padding: 12px;
+    margin-top: 8px;
+    background-color: rgba(255, 255, 255, 0.4);
+    color: black;
+    font-weight: bold;
+    border-radius: 25px;
+    border: 1px solid cyan;
+    font-size: 16px;
+}
+
+/* Pole edycji */
+.limit-input {
+    width: 70px;
+    padding: 7px;
+    border: 1px solid cyan;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 15px;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* wspólne dla przycisków */
+.edit-limit-button,
+.save-limit-button,
+.cancel-limit-button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Edycja limitu */
+.edit-limit-button {
+    background-color: blue;
+}
+
+.edit-limit-button:hover {
+    background-color: darkblue;
+}
+
+/* Zapis */
+.save-limit-button {
+    background-color: limegreen;
+}
+
+.save-limit-button:hover {
+    background-color: forestgreen;
+}
+
+/* Anuluj */
+.cancel-limit-button {
+    background-color: mediumpurple;
+}
+
+.cancel-limit-button:hover {
+    background-color: darkviolet;
+}
+
+/* Przyciski przy edycji limitu */
+.limit-edit-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Formularz do filtru */
+.bike-filter-form {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 15px;
+    width: auto;
+    margin: 0 auto 25px auto;
+    padding: 15px 20px;
+    background-color: rgba(0, 0, 0, 0.45);
+    border-radius: 25px;
+    border: 2px solid cyan;
+}
+
+/* Pola filtru */
+.bike-filter-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Etykieta */
+.bike-filter-field label {
+    margin-bottom: 6px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Wyszukiwarka filtru */
+.bike-filter-field input {
+    width: 220px;
+    height: 38px;
+    padding: 7px 10px;
+    border: 1px solid cyan;
+    border-radius: 25px;
+    font-size: 14px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Przyciski filtru */
+.bike-filter-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.bike-filter-button,
+.bike-clear-button {
+    width: 110px;
+    height: 38px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.bike-filter-button {
+    background-color: limegreen;
+}
+
+.bike-filter-button:hover {
+    background-color: forestgreen;
+}
+
+.bike-clear-button {
+    background-color: mediumpurple;
+}
+
+.bike-clear-button:hover {
+    background-color: darkviolet;
+}
+
+/* Brak wyników */
+.no-bikes {
+    padding: 25px;
+    color: black;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}

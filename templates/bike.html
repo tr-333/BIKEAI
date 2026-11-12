@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu_bar.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='bike.css')}}">
+
+    <title>BIKE AI - Rower</title>
+</head>
+<body>
+    {% include "menu_bar.html" %}
+
+    <!-- FORMULARZ -->
+    <main>
+    <div class="bike-layout">
+
+        <div class="saved-bikes">
+
+            {% if bikes %}
+
+                {% for bike in bikes %}
+
+                    <a href="{{ url_for('bike_route', bike_id=bike['id']) }}">
+
+                    <div class="bike-thumbnail">
+
+                        <!-- Przypisanie zdjecia do typu roweru-->
+                        {% if bike["bike_type"] == "road" %}
+                            <img src="{{ url_for('static', filename='szosowy.png') }}" alt="Rower szosowy">
+                        {% elif bike["bike_type"] == "gravel" %}
+                            <img src="{{ url_for('static', filename='gravel.png') }}" alt="Rower gravel">
+                        {% elif bike["bike_type"] == "mtb" %}
+                            <img src="{{ url_for('static', filename='mtb.png') }}" alt="Rower mtb">
+                        {% elif bike["bike_type"] == "trekking" %}
+                            <img src="{{ url_for('static', filename='trekkingowy.png') }}" alt="Rower trekkingowy">
+                        {% elif bike["bike_type"] == "cross" %}
+                            <img src="{{ url_for('static', filename='crossowy.png') }}" alt="Rower crossowy">
+                        {% elif bike["bike_type"] == "city" %}
+                            <img src="{{ url_for('static', filename='miejski.png') }}" alt="Rower miejski">
+                        {% elif bike["bike_type"] == "dzieciecy" %}
+                            <img src="{{ url_for('static', filename='dzieciecy.png') }}" alt="Rower dzieciecy">
+                        {% elif bike["bike_type"] == "other" %}
+                            <img src="{{ url_for('static', filename='miejski.png') }}" alt="Rower">
+                        {% endif %}
+
+                        <div class="bike-name">
+
+                            {{ bike["brand"] }}
+                        </div>
+                        <div class="bike-model">
+
+                            {{ bike["model"] }}
+                        </div>
+                    </div>
+                    </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+            <!-- Główna ramka -->
+        <div class="bike-container">
+
+            {% if confirm_delete %}
+
+                <div class="delete-confirmation">
+
+                    <h5>Czy na pewno chcesz usunąć ten rower?</h5>
+
+                    <form method="POST">
+                        <input
+                            type="hidden"
+                            name="action"
+                            value="confirm_delete"
+                        >
+                        <input
+                            type="hidden"
+                            name="bike_id"
+                            value="{{ delete_bike_id }}"
+                        >
+                        <button
+                            type="submit"
+                            class="confirm-delete-button"
+                        >
+                            TAK
+                        </button>
+                        <a
+                            href="{{ url_for('bike_route', bike_id=delete_bike_id) }}"
+                            class="cancel-delete-button"
+                        >
+                            NIE
+                        </a>
+                    </form>
+                </div>
+            {% endif %}
+
+            {% if not confirm_delete %}
+
+            <h1 class="bike-title">
+                DANE ROWERU
+            </h1>
+
+            <!-- Sukces bądź błąd przy zapisie-->
+            {% if error %}
+                <div class="error-message">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            {% if success %}
+                <div class="success-message">
+                    {{ success }}
+                </div>
+            {% endif %}
+
+            <form method="POST">
+
+                <div class="form-content">
+
+                    <div class="form-sidebar">
+
+                        <!-- Przyciski formularza -->
+                        <div class="frame-button-form">
+
+                            <div class="button-form">
+                                <button
+                                    type="submit"
+                                    name="action"
+                                    value="category_basic_data"
+                                    class="basic-button"
+                                    formnovalidate
+                                >
+                                    DANE PODSTAWOWE
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    name="action"
+                                    value="category_wheel"
+                                    class="basic-button"
+                                    formnovalidate
+                                >
+                                    BIEGI
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    name="action"
+                                    value="category_drive"
+                                    class="basic-button"
+                                    formnovalidate
+                                >
+                                    NAPĘD
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    name="action"
+                                    value="category_brake"
+                                    class="basic-button"
+                                    formnovalidate
+                                >
+                                    HAMULCE
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    name="action"
+                                    value="category_tires"
+                                    class="basic-button"
+                                    formnovalidate
+                                >
+                                    KOŁA I OPONY
+                                </button>
+
+                                <input
+                                    type="hidden"
+                                    name="current_category"
+                                    value="{{ current_category }}"
+                                >
+                            </div>
+                        </div>
+                            <!-- Przyciski akcji -->
+                        <div class="frame-button-action">
+
+                            <div class="button-action">
+
+                                {% if bike %}
+                                    <button
+                                        type="submit"
+                                        name="action"
+                                        value="edit"
+                                        class="edit-save-button"
+                                    >
+                                        ZAPISZ EDYCJĘ
+                                    </button>
+                                {% else %}
+
+                                    {% if bikes|length < bike_limit %}
+                                        <button
+                                            type="submit"
+                                            name="action"
+                                            value="save"
+                                            class="save-button"
+                                        >
+                                            ZAPISZ ROWER
+                                        </button>
+                                    {% else %}
+                                        <button
+                                            type="submit"
+                                            name="action"
+                                            value="save"
+                                            class="save-button limit-button"
+                                        >
+                                            ZAPISZ ROWER
+                                        </button>
+                                    {% endif %}
+                                {% endif %}
+
+                                <a href="{{ url_for('menu_bar') }}" class="cancel-button">
+                                    ANULUJ
+                                </a>
+                                <button
+                                    type="submit"
+                                    name="action"
+                                    value="delete"
+                                    class="delete-button"
+                                >
+                                    USUŃ ROWER
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                        <!-- Ramka do wyświetlania danych formularzy -->
+                    <div class="form-data">
+
+                        {% if request.args.get('basic_data') == '1' %}
+
+                            {% include "basic_data.html" %}
+
+                        {% elif request.args.get('wheel') == '1' %}
+
+                            {% include "wheel.html" %}
+
+                        {% elif request.args.get('drive') == '1' %}
+
+                            {% include "drive.html" %}
+
+                        {% elif request.args.get('brake') == '1' %}
+
+                            {% include "brake.html" %}
+
+                        {% elif request.args.get('tires') == '1' %}
+
+                            {% include "tires.html" %}
+
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            </form>
+        </div>
+    </div>
+    </main>
+</body>
+</html>

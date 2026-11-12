@@ -1,0 +1,211 @@
+
+<!-- Dane podstawowe -->
+<div class="category-title category-title-basic">
+    DANE PODSTAWOWE
+</div>
+<div class="fields-grid fields-grid-basic">
+
+    <!-- Wiersz 1- marka/ model/ typ -->
+    <div class="basic-row basic-row-first">
+            <!-- MARKA -->
+        <div class="field basic-brand-field">
+
+            <label for="brand">MARKA **</label>
+
+            <input
+                type="text"
+                name="brand"
+                id="brand"
+                placeholder="np. Marka"
+                required
+                value="{{ form_data.get('brand', bike['brand'] if bike else '') }}"
+            >
+        </div>
+            <!-- MODEL -->
+        <div class="field basic-model-field">
+
+            <label for="model">MODEL **</label>
+
+            <input
+                type="text"
+                name="model"
+                id="model"
+                placeholder="np. Model 1"
+                required
+                value="{{ form_data.get('model', bike['model'] if bike else '') }}"
+            >
+        </div>
+            <!-- TYP ROWERU -->
+        <div class="field basic-type-field">
+
+            <label for="bike_type">TYP ROWERU **</label>
+
+            {% set bike_types = [
+                ('road', 'Szosa'),
+                ('gravel', 'Gravel'),
+                ('mtb', 'Mtb'),
+                ('trekking', 'Trekkingowy'),
+                ('cross', 'Crossowy'),
+                ('city', 'Miejski'),
+                ('kids', 'Dziecięcy'),
+                ('other', 'Inny')
+            ] %}
+
+            {% set selected_bike_type = form_data.get('bike_type', bike['bike_type'] if bike else '') %}
+
+            <select name="bike_type" id="bike_type" required>
+
+                <option value="" {% if not selected_bike_type %}selected{% endif %}>
+                    Wybierz typ roweru
+                </option>
+
+                {% for value, label in bike_types %}
+
+                    {% if selected_bike_type == value %}
+
+                        <option value="{{ value }}" selected="selected">
+                            {{ label }}
+                        </option>
+                    {% else %}
+                        <option value="{{ value }}">
+                            {{ label }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <!-- Wiersz 2- rozmiar ramy/ lata produkcji i kupna -->
+    <div class="basic-row basic-row-second">
+            <!-- ROZMIAR RAMY -->
+        <div class="field basic-frame-field">
+
+            <label for="frame_size">ROZMIAR RAMY</label>
+
+            <input
+                type="text"
+                name="frame_size"
+                id="frame_size"
+                placeholder="np. M / 54 cm"
+                value="{{ form_data.get('frame_size', bike['frame_size'] if bike else '') }}"
+            >
+        </div>
+            <!-- ROK PRODUKCJI -->
+        <div class="field basic-production-year-field">
+
+            <label for="production_year">ROK PRODUKCJI</label>
+
+            <input
+                type="number"
+                name="production_year"
+                id="production_year"
+                min="1970"
+                max="2100"
+                step="1"
+                value="{{ form_data.get('production_year', bike['production_year'] if bike else '') }}"
+            >
+        </div>
+            <!-- ROK ZAKUPU -->
+        <div class="field basic-purchase-year-field">
+
+            <label for="purchase_year">ROK ZAKUPU</label>
+
+            <input
+                type="number"
+                name="purchase_year"
+                id="purchase_year"
+                min="1970"
+                max="2100"
+                step="1"
+                value="{{ form_data.get('purchase_year', bike['purchase_year'] if bike else '') }}"
+            >
+        </div>
+    </div>
+    <!-- Wiersz 3- przebieg/ konserwacja -->
+    <div class="basic-row basic-row-third">
+            <!-- AKTUALNY PRZEBIEG -->
+        <div class="field basic-mileage-field">
+
+            <label for="initial_mileage">AKTUALNY PRZEBIEG (KM) **</label>
+
+            <input
+                type="number"
+                name="initial_mileage"
+                id="initial_mileage"
+                min="0"
+                step="1"
+                required
+                placeholder="np. 5500"
+                value="{{ form_data.get('initial_mileage', bike['initial_mileage'] if bike else '') }}"
+            >
+        </div>
+            <!-- KONSERWACJA -->
+        <div class="field basic-maintenance-field">
+
+            <label for="maintenance">KONSERWACJA **</label>
+
+            {% set maintenance_types = [
+                ('regular', 'Regularne mycie'),
+                ('rarely', 'Rzadkie mycie'),
+                ('never', 'Prawie nigdy')
+            ] %}
+
+            {% set selected_maintenance = form_data.get('maintenance', bike['maintenance'] if bike else '') %}
+
+            <select name="maintenance" id="maintenance" required>
+
+                <option value="" {% if not selected_maintenance %}selected{% endif %}>
+                    Wybierz częstotliwość
+                </option>
+
+                {% for value, label in maintenance_types %}
+
+                    {% if selected_maintenance == value %}
+
+                        <option value="{{ value }}" selected="selected">
+                            {{ label }}
+                        </option>
+                    {% else %}
+
+                        <option value="{{ value }}">
+                            {{ label }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="basic-handlebar-row">
+
+    {% set handlebar_types = [
+        ('drop', 'Baranek'),
+        ('flat', 'Prosta'),
+        ('riser', 'Gięta'),
+        ('other', 'Inna')
+    ] %}
+
+    {% set selected_handlebar = form_data.get('handlebar_type', bike['handlebar_type'] if bike else '') %}
+        <!-- TYP KIEROWNICY -->
+    <div class="field basic-handlebar-field">
+
+        <label for="handlebar_type">TYP KIEROWNICY</label>
+
+        <select name="handlebar_type" id="handlebar_type" required>
+
+            <option value="" {% if not selected_handlebar_type %}selected{% endif %}>
+                Wybiesz typ
+            </option>
+
+            {% for value, label in handlebar_types %}
+                {% if selected_handlebar == value %}
+                    <option value="{{ value }}" selected="selected">{{ label }}</option>
+                {% else %}
+                    <option value="{{ value }}">{{ label }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+    </div>
+    <span style="color: white;">**Pola obowiązkowe</span>
+</div>

@@ -1,0 +1,18 @@
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Dane poufne
+.env
+.env.*
+!.env.example
+
+# PyCharm
+.idea/
+
+# Pliki tymczasowe
+*.log
+*.tmp

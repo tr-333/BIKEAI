@@ -1,0 +1,373 @@
+
+<!-- Hamulce -->
+<div class="category-title category-title-brakes">
+    HAMULCE
+</div>
+
+<div class="fields-grid fields-grid-brakes">
+    <!-- Wiersz 1- typ/ rodzaj/ sposób obsługi -->
+    <div class="brakes-top-row">
+
+        {% set brake_types = [
+            ('hydraulic_disc', 'Tarczowe hydrauliczne'),
+            ('mechanical_disc', 'Tarczowe mechaniczne'),
+            ('rim', 'Szczękowe'),
+            ('other', 'Inne')
+        ] %}
+
+        {% set selected_brake_type = form_data.get('brake_type', bike['brake_type'] if bike else '') %}
+
+        <div class="field brake-type-field">
+
+            <label for="brake_type">TYP HAMULCA **</label>
+
+            <select name="brake_type" id="brake_type" required>
+
+                <option value="" {% if not selected_brake_type %}selected{% endif %}>
+                    Wybierz
+                </option>
+
+                {% for value, label in brake_types %}
+
+                    {% if selected_brake_type == value %}
+                        <option value="{{ value }}" selected="selected">
+                            {{ label }}
+                        </option>
+                    {% else %}
+                        <option value="{{ value }}">
+                            {{ label }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        {% set pad_types = [
+            ('metallic', 'Metaliczne'),
+            ('metallic_radiator', 'Metaliczne z radiatorem'),
+            ('polymetallic', 'Półmetaliczne'),
+            ('polymetallic_radiator', 'Półmetaliczne z radiatorem'),
+            ('ceramic', 'Ceramiczne'),
+            ('resinous_organic', 'Żywiczne/ organiczne'),
+            ('resinous_organic_radiator', 'Żywiczne/ organiczne z radiatorem'),
+            ('rubber', 'Kauczuk'),
+            ('poliuretan', 'Poliuretan')
+        ] %}
+
+        {% set selected_pad_type = form_data.get('kind_pads', bike['kind_pads'] if bike else '') %}
+
+        <div class="field pad-type-field">
+
+            <label for="kind_pads">RODZAJ KLOCKÓW **</label>
+
+            <select name="kind_pads" id="kind_pads" required>
+
+                <option value="" {% if not selected_kind_pads %}selected{% endif %}>
+                    Wybierz
+                </option>
+
+                {% for value, label in pad_types %}
+
+                    {% if selected_pad_type == value %}
+                        <option value="{{ value }}" selected="selected">
+                            {{ label }}
+                        </option>
+                    {% else %}
+                        <option value="{{ value }}">
+                            {{ label }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        {% set brake_controls = [
+            ('integrated_levers', 'Klamkomanetki'),
+            ('brake_levers', 'Klamki hamulcowe'),
+            ('other', 'Inna')
+        ] %}
+
+        {% set selected_brake_control = form_data.get('brake_control', bike['brake_control'] if bike else '') %}
+
+        <div class="field brake-control-field">
+
+            <label for="brake_control">SPOSÓB OBSŁUGI HAMULCÓW **</label>
+
+            <select name="brake_control" id="brake_control" required>
+
+                <option value="" {% if not selected_brake_control %}selected{% endif %}>
+                    Wybierz
+                </option>
+
+                {% for value, label in brake_controls %}
+
+                    {% if selected_brake_control == value %}
+                        <option value="{{ value }}" selected="selected">
+                            {{ label }}
+                        </option>
+                    {% else %}
+                        <option value="{{ value }}">
+                            {{ label }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <!-- Wiersz 2- hamulec przód -->
+    <div class="brakes-component-row">
+
+        <div class="field brake-model-field">
+
+            <label for="brake_model">HAMULEC PRZEDNI **</label>
+
+            <input
+                type="text"
+                name="brake_model"
+                id="brake_model"
+                placeholder="np. Shimano GRX"
+                required
+                value="{{ form_data.get('brake_model', bike['brake_model'] if bike else '') }}"
+            >
+        </div>
+        <div class="field brake-detail-field">
+
+            <label for="brake_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="brake_replacement_date"
+                id="brake_replacement_date"
+                value="{{ form_data.get('brake_replacement_date', bike['brake_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="field brake-detail-field">
+
+            <label for="brake_mileage">PRZEBIEG OD WYMIANY</label>
+
+            <input
+                type="number"
+                name="brake_mileage"
+                id="brake_mileage"
+                min="0"
+                step="1"
+                placeholder="np. 2000"
+                value="{{ form_data.get('brake_mileage', bike['brake_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+    <!-- Wiersz 3- hamulec tył -->
+    <div class="brakes-component-row">
+
+        <div class="field brake-model-field">
+
+            <label for="rear_brake_model">HAMULEC TYLNY **</label>
+
+            <input
+                type="text"
+                name="rear_brake_model"
+                id="rear_brake_model"
+                placeholder="np. Shimano GRX"
+                value="{{ form_data.get('rear_brake_model', bike['rear_brake_model'] if bike else '') }}"
+            >
+        </div>
+        <div class="field brake-detail-field">
+
+            <label for="rear_brake_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="rear_brake_replacement_date"
+                id="rear_brake_replacement_date"
+                value="{{ form_data.get('rear_brake_replacement_date',
+                 bike['rear_brake_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="field brake-detail-field">
+
+            <label for="rear_brake_mileage">PRZEBIEG OD WYMIANY</label>
+
+            <input
+                type="number"
+                name="rear_brake_mileage"
+                id="rear_brake_mileage"
+                min="0"
+                step="1"
+                placeholder="np. 2000"
+                value="{{ form_data.get('rear_brake_mileage', bike['rear_brake_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+    <!-- Wiersz 4- tarcza przód -->
+    <div class="brakes-component-row">
+
+        <div class="field brake-model-field">
+
+            <label for="brake_rotors">TARCZA PRZEDNIA **</label>
+
+            <input
+                type="text"
+                name="brake_rotors"
+                id="brake_rotors"
+                placeholder="np. Shimano 160 mm"
+                required
+                value="{{ form_data.get('brake_rotors', bike['brake_rotors'] if bike else '') }}"
+            >
+        </div>
+        <div class="field brake-detail-field">
+
+            <label for="brake_rotors_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="brake_rotors_replacement_date"
+                id="brake_rotors_replacement_date"
+                value="{{ form_data.get('brake_rotors_replacement_date',
+                 bike['brake_rotors_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="field brake-detail-field">
+
+            <label for="brake_rotors_mileage">PRZEBIEG OD WYMIANY</label>
+
+            <input
+                type="number"
+                name="brake_rotors_mileage"
+                id="brake_rotors_mileage"
+                min="0"
+                step="1"
+                placeholder="np. 2000"
+                value="{{ form_data.get('brake_rotors_mileage', bike['brake_rotors_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+    <!-- Wiersz 5- tarcza tył -->
+    <div class="brakes-component-row">
+
+        <div class="field brake-model-field">
+
+            <label for="rear_brake_rotors">TARCZA TYLNA **</label>
+
+            <input
+                type="text"
+                name="rear_brake_rotors"
+                id="rear_brake_rotors"
+                placeholder="np. Shimano 160 mm"
+                value="{{ form_data.get('rear_brake_rotors', bike['rear_brake_rotors'] if bike else '') }}"
+            >
+        </div>
+        <div class="field brake-detail-field">
+
+            <label for="rear_brake_rotors_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="rear_brake_rotors_replacement_date"
+                id="rear_brake_rotors_replacement_date"
+                value="{{ form_data.get('rear_brake_rotors_replacement_date',
+                 bike['rear_brake_rotors_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="field brake-detail-field">
+
+            <label for="rear_brake_rotors_mileage">PRZEBIEG OD WYMIANY</label>
+
+            <input
+                type="number"
+                name="rear_brake_rotors_mileage"
+                id="rear_brake_rotors_mileage"
+                min="0"
+                step="1"
+                placeholder="np. 2000"
+                value="{{ form_data.get('rear_brake_rotors_mileage',
+                 bike['rear_brake_rotors_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+    <!-- Wiersz 6- klocki przód -->
+    <div class="brakes-component-row">
+
+        <div class="field brake-model-field">
+
+            <label for="brake_pads">KLOCKI PRZEDNIE **</label>
+
+            <input
+                type="text"
+                name="brake_pads"
+                id="brake_pads"
+                placeholder="np. Shimano B05S"
+                required
+                value="{{ form_data.get('brake_pads', bike['brake_pads'] if bike else '') }}"
+            >
+        </div>
+        <div class="field brake-detail-field">
+
+            <label for="brake_pads_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="brake_pads_replacement_date"
+                id="brake_pads_replacement_date"
+                value="{{ form_data.get('brake_pads_replacement_date',
+                 bike['brake_pads_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="field brake-detail-field">
+
+            <label for="brake_pads_mileage">PRZEBIEG OD WYMIANY</label>
+
+            <input
+                type="number"
+                name="brake_pads_mileage"
+                id="brake_pads_mileage"
+                min="0"
+                step="1"
+                placeholder="np. 2000"
+                value="{{ form_data.get('brake_pads_mileage', bike['brake_pads_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+    <!-- Wiersz 7- klocki tył -->
+    <div class="brakes-component-row">
+
+        <div class="field brake-model-field">
+
+            <label for="rear_brake_pads">KLOCKI TYLNE **</label>
+
+            <input
+                type="text"
+                name="rear_brake_pads"
+                id="rear_brake_pads"
+                placeholder="np. Shimano B05S"
+                value="{{ form_data.get('rear_brake_pads', bike['rear_brake_pads'] if bike else '') }}"
+            >
+        </div>
+        <div class="field brake-detail-field">
+
+            <label for="rear_brake_pads_replacement_date">DATA WYMIANY</label>
+
+            <input
+                type="date"
+                name="rear_brake_pads_replacement_date"
+                id="rear_brake_pads_replacement_date"
+                value="{{ form_data.get('rear_brake_pads_replacement_date',
+                 bike['rear_brake_pads_replacement_date'] if bike else '') }}"
+            >
+        </div>
+        <div class="field brake-detail-field">
+
+            <label for="rear_brake_pads_mileage">PRZEBIEG OD WYMIANY</label>
+
+            <input
+                type="number"
+                name="rear_brake_pads_mileage"
+                id="rear_brake_pads_mileage"
+                min="0"
+                step="1"
+                placeholder="np. 2000"
+                value="{{ form_data.get('rear_brake_pads_mileage', bike['rear_brake_pads_mileage'] if bike else '') }}"
+            >
+        </div>
+    </div>
+</div>
+<span style="color: white;">**Pola obowiązkowe. Pola dat i przebiegów potrzebne do analizy.</span>

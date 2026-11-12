@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu_bar.css')}}">
+
+    <title>BIKE AI - Menu</title>
+</head>
+<body>
+    <header class="top-bar">
+
+        <div class="user-panel">
+
+            <h1 class="logo">BIKE AI</h1>
+
+            <div class="welcome">
+                Witaj, {{ session["username"] }}!
+            </div>
+
+            <a href="{{ url_for('logout_route') }}" class="logout-button">
+                WYLOGUJ
+            </a>
+        </div>
+        <nav class="navigation">
+
+            <a href="{{ url_for('message') }}" class="messages-link">
+                WIADOMOŚCI
+
+                {% if unread_messages_count|default(0)|int > 0 %}
+
+                    <span class="unread-messages-count">
+                        {{ unread_messages_count }}
+                    </span>
+                {% endif %}
+            </a>
+
+            <a href="{{ url_for('profil') }}">
+                PROFIL
+            </a>
+
+            {% if not is_account_blocked %}
+
+                <a href="{{ url_for('bike_route') }}">
+                    ROWER
+                </a>
+
+                <a href="{{ url_for('ride_route') }}">
+                    PRZEJAZDY
+                </a>
+
+                <a href="{{ url_for('analysis_route') }}">
+                    ANALIZA
+                </a>
+            {% endif %}
+        </nav>
+    </header>
+    <main class="content">
+    </main>
+</body>
+</html>

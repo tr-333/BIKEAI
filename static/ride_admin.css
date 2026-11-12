@@ -1,0 +1,320 @@
+
+* {
+    box-sizing: border-box;
+}
+
+/* Główna ramka */
+.rides-admin-container {
+    width: 90%;
+    max-width: 1400px;
+    margin: 10px auto 0 auto;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 25px;
+    border: 3px solid cyan;
+}
+
+/* Tytuł */
+.rides-admin-title {
+    margin: 0 0 25px 0;
+    text-align: center;
+    color: darkgreen;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Filtr */
+.ride-filter-form,
+.ride-details-filter-form {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 15px;
+    width: auto;
+    margin: 0 auto 25px auto;
+    padding: 15px 20px;
+    background-color: rgba(0, 0, 0, 0.45);
+    border-radius: 25px;
+    border: 2px solid cyan;
+}
+
+/* Pole filtra */
+.ride-filter-field,
+.ride-details-filter-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Etykieta pola */
+.ride-filter-field label,
+.ride-details-filter-field label {
+    margin-bottom: 6px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Pole tekstowe / daty */
+.ride-filter-field input {
+    width: 220px;
+    height: 38px;
+    padding: 7px 10px;
+    border: 1px solid cyan;
+    border-radius: 25px;
+    font-size: 14px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Przyciski filtra */
+.ride-filter-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.ride-filter-button,
+.ride-clear-button {
+    width: 110px;
+    height: 38px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Przycisk FILTRUJ */
+.ride-filter-button {
+    background-color: limegreen;
+}
+
+.ride-filter-button:hover {
+    background-color: forestgreen;
+}
+
+/* Przycisk WYCZYŚĆ */
+.ride-clear-button {
+    background-color: mediumpurple;
+}
+
+.ride-clear-button:hover {
+    background-color: darkviolet;
+}
+
+/* Obszar przewijalny */
+.rides-scroll {
+    max-height: 55vh;
+    overflow-y: auto;
+}
+
+/* pasek przewijania */
+.rides-scroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+.rides-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+}
+
+.rides-scroll::-webkit-scrollbar-thumb {
+    background: cyan;
+    border-radius: 25px;
+}
+
+.rides-scroll::-webkit-scrollbar-thumb:hover {
+    background: darkcyan;
+}
+
+/* Tabela przejazdów */
+.rides-table {
+    width: 100%;
+}
+
+/* Wspólne dla nagłówka i wiersza tabeli oraz podsumowanie */
+.rides-header,
+.rides-row,
+.rides-summary {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr 1fr;
+    gap: 15px;
+    align-items: center;
+    padding: 12px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 25px;
+    border: 1px solid cyan;
+}
+
+.rides-header,
+.rides-row {
+    font-size: 14px;
+}
+
+.rides-summary {
+    background-color: rgba(0, 0, 0, 0.45);
+    color: white;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+/* Nagłówek tabeli */
+.rides-header {
+    background-color: rgba(0, 0, 0, 0.45);
+    color: white;
+}
+
+/* Wiersz tabeli */
+.rides-row {
+    margin-top: 5px;
+    background-color: rgba(255, 255, 255, 0.4);
+    color: black;
+}
+
+/* Przycisk Szczegóły */
+.ride-details-button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 25px;
+    background-color: blue;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.ride-details-button:hover {
+    background-color: darkblue;
+}
+
+/* Brak wyników */
+.no-rides {
+    padding: 25px;
+    color: black;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* Przycisk powrotu użytkownika */
+.back-users-form {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.back-users-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 25px;
+    background-color: mediumpurple;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.back-users-button:hover {
+    background-color: purple;
+}
+
+/* wspólne dla pól tekstowych/ dat/ wyboru roweru */
+.ride-details-filter-field input,
+.ride-details-filter-field select {
+    width: 180px;
+    height: 38px;
+    padding: 7px 10px;
+    border: 1px solid cyan;
+    border-radius: 25px;
+    font-size: 14px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Wybór roweru */
+.ride-details-filter-field select {
+    cursor: pointer;
+}
+
+/* Przyciski filtra */
+.ride-details-filter-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Tabela szczegółów */
+.ride-details-table .rides-header,
+.ride-details-row,
+.ride-details-summary {
+    grid-template-columns: 2fr 1.2fr 2fr 1.2fr 1fr;
+}
+
+/* Przycisk Usuń */
+.delete-ride-button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 25px;
+    background-color: tomato;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.delete-ride-button:hover {
+    background-color: firebrick;
+}
+
+/* Potwierdzenie usunięcia przejazdu */
+.admin-delete-confirmation {
+    text-align: center;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.admin-delete-question {
+    margin-bottom: 15px;
+    color: darkred;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Przyciski potwierdzenia */
+.confirm-delete-button,
+.cancel-delete-button {
+    display: inline-block;
+    padding: 9px 20px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Potwierdzenie */
+.confirm-delete-button {
+    background-color: limegreen;
+}
+
+.confirm-delete-button:hover {
+    background-color: forestgreen;
+}
+
+/* Anulowanie */
+.cancel-delete-button {
+    background-color: mediumpurple;
+}
+
+.cancel-delete-button:hover {
+    background-color: darkviolet;
+}
+
+
+

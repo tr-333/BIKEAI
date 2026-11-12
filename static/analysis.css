@@ -1,0 +1,194 @@
+
+* {
+    box-sizing: border-box;
+}
+
+/* Przyciski statystyki użytkowników */
+.users-form-button {
+    width: 150px;
+    margin-left: 50px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+/* wspólne dla przycisków statystyk użytkowników/ przejazdów/ AI model */
+.static-users-button,
+.static-bikes-button,
+.button-char,
+.static-ai-button {
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    background-color: blue;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.static-users-button,
+.static-bikes-button,
+.static-ai-button {
+    width: 120%;
+}
+
+/* Przycisk AI MODEL */
+.static-ai-button {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* Przycisk wykresu */
+.button-char {
+    width: 100%;
+    margin: 15px auto auto 15px;
+    display: block;
+}
+
+.static-users-button:hover,
+.static-bikes-button:hover,
+.button-char:hover,
+.static-ai-button:hover {
+    background-color: darkblue;
+}
+
+/* główny kontener analizy*/
+.analysis-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+/* Główna ramka statystyk */
+.statistics-frame {
+    width: 85%;
+    max-width: 1550px;
+    margin: 10px auto;
+    padding: 25px;
+    border-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.15);
+    color: white;
+    border: 3px solid cyan;
+}
+
+/* Tytuł */
+.title-frame-users {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    color: darkgreen;
+    font-size: 28px;
+}
+
+/* Sekcja formularza */
+.section-form {
+    padding: 12px;
+    max-width: 325px;
+    border: 2px solid cyan;
+    border-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+/* Odstęp pomiędzy kolejnymi ramkami */
+.section-form + .section-form {
+    margin-top: 30px;
+}
+
+/* Etykiety i opisy statystyk oraz wspólne dla tytuł wewnętrz sekcji */
+.label-style,
+.label-style-bike,
+.title-label-style {
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+}
+
+.label-style,
+.label-style-bike {
+    color: lightyellow;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+/* Tytuł wewnątrz sekcji */
+.title-label-style {
+    color: lawngreen;
+    margin-bottom: 15px;
+    text-align: center;
+    gap: 30px;
+}
+
+/* Wyrównanie nazw i wartości statystyk użytkowników */
+.label-style label,
+.label-style-bike label {
+    display: flex;
+    align-items: center;
+}
+
+/* Wartości statystyk wyrównane do prawej */
+.label-style .stat-value,
+.label-style-bike .stat-value {
+    margin-left: auto;
+    text-align: right;
+}
+
+/* Wartość statystyk */
+.stat-value {
+    margin-left: 15px;
+    color: lightskyblue;
+    font-weight: bold;
+}
+
+/* Ramka wykresu*/
+.section-form-diagram {
+    box-sizing: border-box;
+    padding: 20px;
+    width: 900px;
+    min-height: 550px;
+    border: 2px solid cyan;
+    border-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.45);
+    margin-top: 0;
+}
+
+/* Zawartość */
+.statistics-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+/* Lewa część zawierająca statystyki */
+.statistics-left {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Formularz wykresu */
+.char-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 0;
+}
+
+/* Tytuł wykresu*/
+.title-diagram {
+    margin: 70px 0 5px 0;
+    text-align: center;
+    color: lawngreen;
+    font-size: 20px;
+}
+
+/* Wykres typów rowerów */
+.bike-types-chart {
+    width: 100%;
+    height: auto;
+    display: block;
+}

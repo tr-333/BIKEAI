@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='history_rides.css') }}">
+
+    <title>Historia przejazdów</title>
+</head>
+<body>
+    <div class="ride_container_history">
+
+        <h2>HISTORIA</h2>
+
+        <form method="GET" action="{{ url_for('ride_route') }}" class="ride-history-filter">
+
+            <input
+                type="hidden"
+                name="history"
+                value="1"
+            >
+            <div class="history-filter-field">
+
+                <label>NAZWA PRZEJAZDU</label>
+                    <input
+                        type="text"
+                        name="ride_name_filter"
+                        value="{{ ride_name_filter or '' }}"
+                    >
+            </div>
+            <div class="history-filter-field">
+
+                <label>DYSTANS OD</label>
+                    <input
+                        type="number"
+                        name="distance_from"
+                        min="0"
+                        step="0.1"
+                        value="{{ distance_from or '' }}"
+                    >
+            </div>
+            <div class="history-filter-field">
+
+                <label>DYSTANS DO</label>
+                    <input
+                        type="number"
+                        name="distance_to"
+                        min="0"
+                        step="0.1"
+                        value="{{ distance_to or '' }}"
+                    >
+            </div>
+            <div class="history-filter-buttons">
+
+                <button
+                    type="submit"
+                    class="history-filter-button"
+                >
+                    FILTRUJ
+                </button>
+
+                <a href="{{ url_for('ride_route', history=1) }}" class="history-clear-button">
+                    WYCZYŚĆ
+                </a>
+            </div>
+        </form>
+        <div class="ride-history-list">
+
+                <!-- Przypisanie zdjecia do dystansu -->
+            {% for ride in rides %}
+
+                {% if ride['distance'] <= 25 %}
+                    {% set image_name = 'black.png' %}
+
+                {% elif ride['distance'] <= 60 %}
+                    {% set image_name = 'brown.png' %}
+
+                {% elif ride['distance'] <= 150 %}
+                    {% set image_name = 'silver.png' %}
+
+                {% else %}
+                    {% set image_name = 'gold.png' %}
+                {% endif %}
+
+                    <!-- pojedynczy przejazd -->
+                <div class="ride-history-item">
+
+                    <details class="ride_details">
+                        <summary>
+                            <div class="ride-thumbnail">
+                                <img
+                                    src="{{ url_for('static', filename=image_name) }}"
+                                    alt="{{ ride['ride_name'] }}"
+                                >
+                                <div class="ride-distance">
+                                    {{ ride['distance'] }} km
+                                </div>
+                            </div>
+                            <div class="ride-name">
+                                {{ ride['ride_name'] }}
+                            </div>
+                        </summary>
+                        <form method="POST" class="delete-form">
+                            <input
+                                type="hidden"
+                                name="action"
+                                value="delete"
+                            >
+                            <input
+                                type="hidden"
+                                name="ride_id"
+                                value="{{ ride['id'] }}"
+                            >
+                            <button
+                                type="submit"
+                                class="delete-button"
+                            >
+                                USUŃ
+                            </button>
+                        </form>
+
+                        <!-- szczegóły przejazdu-->
+                        <div class="ride_details_content">
+
+                            <div class="ride_data">
+
+                                <h3>{{ ride['ride_name'] }}</h3>
+
+                                <div class="ride_details_row">
+
+                                    <strong>ROWER:</strong>
+
+                                    <span>{{ ride['brand'] }} {{ ride['model'] }}</span>
+                                </div>
+                                <div class="ride_details_row">
+
+                                    <strong>DATA:</strong>
+
+                                    <span>{{ ride['ride_date'] }}</span>
+                                </div>
+                                <div class="ride_details_row">
+
+                                    <strong>GODZINA ROZPOCZĘCIA:</strong>
+
+                                    <span>{{ ride['start_time'] }}</span>
+                                </div>
+                                <div class="ride_details_row">
+
+                                    <strong>CZAS PRZEJAZDU:</strong>
+
+                                    <span>{{ ride['full_time'] }}</span>
+                                </div>
+                                <div class="ride_details_row">
+
+                                    <strong>DYSTANS::</strong>
+
+                                    <span>{{ ride['distance'] }} km</span>
+                                </div>
+                                <div class="ride_details_row">
+
+                                    <strong>PRZEWYŻSZENIA:</strong>
+
+                                    <span>{{ ride['elevation'] }} m</span>
+                                </div>
+                                <div class="ride_details_row">
+
+                                    <strong>ŚREDNIA PRĘDKOŚĆ:</strong>
+
+                                    <span>{{ ride['avg_speed'] }} km/h</span>
+                                </div>
+                                <div class="ride_details_row">
+
+                                    <strong>MAX PRĘDKOŚĆ:</strong>
+
+                                    <span>{{ ride['max_speed'] }} km/h</span>
+                                </div>
+                                <div class="ride_details_row">
+
+                                    <strong>TEMPERATURA:</strong>
+
+                                    <span>{{ ride['temperature'] }} °C</span>
+                                </div>
+                                <div class="ride_details_row">
+
+                                    <strong>WILGOTNOŚĆ:</strong>
+
+                                    <span>{{ ride['humidity'] }} %</span>
+                                </div>
+                                <div class="ride_details_row">
+
+                                    <strong>WIATR:</strong>
+
+                                    <span>{{ ride['wind'] }} km/h</span>
+                                </div>
+                                <div class="ride_details_row">
+
+                                    <strong>UWAGI:</strong>
+
+                                    <span>{{ ride['notes'] }}</span>
+                                </div>
+                            </div>
+                            <div class="ride_map">
+
+                                    <!-- Zdjęcie bądź trasqa gpx -->
+                                {% if ride['gpx_file'] %}
+                                    <img
+                                        src="{{ url_for('gpx_map', filename=ride['gpx_file'].replace('.gpx', '.png')) }}"
+                                        alt="Mapa trasy"
+                                    >
+                                {% else %}
+                                    <img
+                                        src="{{ url_for('static', filename='nonemaps.png') }}"
+                                        class="nonemaps-image"
+                                        alt="Brak mapy trasy"
+                                    >
+                                {% endif %}
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            {% endfor %}
+            {% if not rides %}
+                <div class="no-rides">
+                    Brak przejazdów spełniających kryteria.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

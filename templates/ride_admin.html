@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu_bar.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='ride_admin.css') }}">
+
+    <title>BIKE AI - Przejazdy użytkowników</title>
+</head>
+<body>
+    {% include "menu_bar.html" %}
+    <main>
+        <div class="rides-admin-container">
+
+            <!-- WIDOK LISTY UŻYTKOWNIKÓW -->
+            {% if not show_details %}
+
+                <h2 class="rides-admin-title">
+                    PRZEJAZDY UŻYTKOWNIKÓW
+                </h2>
+
+                <!-- FILTR UŻYTKOWNIKÓW -->
+                <form method="POST" action="{{ url_for('ride_route') }}" class="ride-filter-form">
+
+                    <input
+                        type="hidden"
+                        name="action"
+                        value="filter_users"
+                    >
+                    <div class="ride-filter-field">
+
+                        <label>UŻYTKOWNIK</label>
+
+                        <input
+                            type="text"
+                            name="username_filter"
+                            value="{{ username_filter or '' }}"
+                        >
+                    </div>
+                    <div class="ride-filter-buttons">
+
+                        <button
+                            type="submit"
+                            class="ride-filter-button"
+                        >
+                            FILTRUJ
+                        </button>
+                        <button
+                            type="submit"
+                            name="clear_filter"
+                            value="1"
+                            class="ride-clear-button"
+                        >
+                            WYCZYŚĆ
+                        </button>
+                    </div>
+                </form>
+                <!-- LISTA UŻYTKOWNIKÓW -->
+                <div class="rides-scroll">
+
+                    <div class="rides-table">
+
+                        <div class="rides-header">
+
+                            <div>UŻYTKOWNIK</div>
+                            <div>ILOŚĆ TRAS</div>
+                            <div>DYSTANS</div>
+                            <div>SZCZEGÓŁY</div>
+                        </div>
+                        {% for user_data in users %}
+
+                            <div class="rides-row">
+                                <div>
+                                    {{ user_data["username"] }}
+                                </div>
+                                <div>
+                                    {{ user_data["ride_count"] }}
+                                </div>
+                                <div>
+                                    {{ "%.1f"|format(
+                                        user_data["total_distance"] or 0
+                                    ) }} km
+                                </div>
+                                <div>
+                                    <form method="POST" action="{{ url_for('ride_route') }}">
+
+                                        <input
+                                            type="hidden"
+                                            name="action"
+                                            value="show_details"
+                                        >
+                                        <input
+                                            type="hidden"
+                                            name="user_id"
+                                            value="{{ user_data['id'] }}"
+                                        >
+                                        <button
+                                            type="submit"
+                                            class="ride-details-button"
+                                        >
+                                            SZCZEGÓŁY
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% if not users %}
+                            <div class="no-rides">
+
+                                Brak użytkowników spełniających kryteria.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- PODSUMOWANIE -->
+                <div class="rides-summary">
+                    <div>
+                        SUMA UŻYTKOWNIKÓW: {{ users|length }}
+                    </div>
+                    <div>
+                        {{ users|sum(attribute="ride_count") }}
+                    </div>
+                    <div>
+                        {{ "%.1f"|format(users|sum(attribute="total_distance") or 0 ) }} km
+                    </div>
+                    <div>
+                        —
+                    </div>
+                </div>
+            <!-- WIDOK SZCZEGÓŁÓW UŻYTKOWNIKA -->
+            {% else %}
+                <h2 class="rides-admin-title">
+
+                    PRZEJAZDY UŻYTKOWNIKA:
+
+                    {{ selected_user["username"] }}
+                </h2>
+                {% if confirm_delete %}
+
+                    <div class="admin-delete-confirmation">
+
+                        <div class="admin-delete-question">
+                            CZY CHCESZ USUNĄĆ TEN PRZEJAZD?
+                        </div>
+                        <form method="POST" action="{{ url_for('ride_route') }} ">
+                            <input
+                                type="hidden"
+                                name="ride_id"
+                                value="{{ delete_ride_id }}"
+                            >
+                            <input
+                                type="hidden"
+                                name="user_id"
+                                value="{{ delete_user_id }}"
+                            >
+                            <button
+                                type="submit"
+                                class="confirm-delete-button"
+                            >
+                                    TAK
+                            </button>
+                            <button
+                                type="submit"
+                                name="action"
+                                value="show_details"
+                                class="cancel-delete-button"
+                            >
+                                NIE
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+
+                <!-- POWRÓT DO LISTY UŻYTKOWNIKÓW -->
+                <form method="GET" action="{{ url_for('ride_route') }}" class="back-users-form">
+
+                    <button
+                        type="submit"
+                        class="back-users-button"
+                    >
+                        ← UŻYTKOWNICY
+                    </button>
+                </form>
+                <!-- FILTR PRZEJAZDÓW -->
+                <form method="POST" action="{{ url_for('ride_route') }}" class="ride-details-filter-form">
+
+                    <input
+                        type="hidden"
+                        name="action"
+                        value="filter_rides"
+                    >
+
+                    <input
+                        type="hidden"
+                        name="user_id"
+                        value="{{ selected_user['id'] }}"
+                    >
+                    <!-- ROWER -->
+                    <div class="ride-details-filter-field">
+
+                        <label>ROWER</label>
+
+                        <select name="bike_id">
+
+                            <option value="">
+                                WSZYSTKIE
+                            </option>
+
+                            {% for bike in user_bikes %}
+
+                                {% if bike_filter == bike['id'] %}
+                                    <option value="{{ bike['id'] }}" selected >
+
+                                        {{ bike["brand"] }} {{ bike["model"] }}
+                                    </option>
+                                {% else %}
+                                    <option value="{{ bike['id'] }}">
+
+                                        {{ bike["brand"] }} {{ bike["model"] }}
+                                    </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- DATA OD -->
+                    <div class="ride-details-filter-field">
+
+                        <label>DATA OD</label>
+
+                        <input
+                            type="date"
+                            name="date_from"
+                            value="{{ date_from or '' }}"
+                        >
+                    </div>
+                    <!-- DATA DO -->
+                    <div class="ride-details-filter-field">
+
+                        <label>DATA DO</label>
+
+                        <input
+                            type="date"
+                            name="date_to"
+                            value="{{ date_to or '' }}"
+                        >
+                    </div>
+                    <!-- NAZWA -->
+                    <div class="ride-details-filter-field">
+
+                        <label>NAZWA</label>
+
+                        <input
+                            type="text"
+                            name="ride_name_filter"
+                            value="{{ ride_name_filter or '' }}"
+                        >
+                    </div>
+                    <!-- PRZYCISKI -->
+                    <div class="ride-details-filter-buttons">
+
+                        <button
+                            type="submit"
+                            class="ride-filter-button"
+                        >
+                            FILTRUJ
+                        </button>
+                        <button
+                            type="submit"
+                            name="clear_ride_filter"
+                            value="1"
+                            class="ride-clear-button"
+                        >
+                            WYCZYŚĆ
+                        </button>
+                    </div>
+                </form>
+                <!-- LISTA PRZEJAZDÓW -->
+                <div class="rides-scroll">
+
+                    <div class="rides-table ride-details-table">
+                        <!-- NAGŁÓWEK -->
+                        <div class="rides-header">
+
+                            <div>ROWER</div>
+                            <div>DATA</div>
+                            <div>NAZWA</div>
+                            <div>DYSTANS</div>
+                            <div>USUŃ</div>
+                        </div>
+                        <!-- PRZEJAZDY -->
+                        {% for ride in rides %}
+                            <div class="rides-row ride-details-row">
+                                <!-- ROWER -->
+                                <div>
+                                    {{ ride["brand"] }}
+                                    {{ ride["model"] }}
+                                </div>
+                                <!-- DATA -->
+                                <div>
+                                    {{ ride["ride_date"] }}
+                                </div>
+                                <!-- NAZWA -->
+                                <div>
+                                    {{ ride["ride_name"] }}
+                                </div>
+                                <!-- DYSTANS -->
+                                <div>
+                                    {{ "%.1f"|format( ride["distance"] or 0 ) }} km
+                                </div>
+                                <!-- USUŃ -->
+                                <div>
+                                    <form method="POST" action="{{ url_for('ride_route') }}">
+
+                                        <input
+                                            type="hidden"
+                                            name="action"
+                                            value="delete_admin_ride"
+                                        >
+                                        <input
+                                            type="hidden"
+                                            name="ride_id"
+                                            value="{{ ride['id'] }}"
+                                        >
+                                        <input
+                                            type="hidden"
+                                            name="user_id"
+                                            value="{{ selected_user['id'] }}"
+                                        >
+                                        <button
+                                            type="submit"
+                                            class="delete-ride-button"
+                                        >
+                                            USUŃ
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% if not rides %}
+
+                            <div class="no-rides">
+                                Brak przejazdów spełniających kryteria.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- PODSUMOWANIE PRZEJAZDÓW -->
+                <div class="rides-summary ride-details-summary">
+                    <div>
+                        SUMA TRAS: {{ rides|length }}
+                    </div>
+                    <div>
+                        —
+                    </div>
+                    <div>
+                        —
+                    </div>
+                    <div>
+                        {{ "%.1f"|format( rides|sum(attribute="distance") or 0 ) }} km
+                    </div>
+                    <div>
+                        —
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

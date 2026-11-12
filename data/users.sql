@@ -1,0 +1,34 @@
+USE users;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    email_verified BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+SHOW TABLES;
+
+ALTER TABLE users
+ADD COLUMN role VARCHAR(20) NOT NULL DEFAULT 'user';
+
+SELECT *FROM users;
+UPDATE users
+SET role = 'admin'
+WHERE username = 'admin';
+
+ALTER TABLE users
+ADD COLUMN bike_limit INT NOT NULL DEFAULT 2;
+
+ALTER TABLE users
+ADD COLUMN blocked TINYINT(1) NOT NULL DEFAULT 0;
+
+ALTER TABLE users
+ADD COLUMN blocked
+ENUM('aktywny', 'zablokowany')
+NOT NULL DEFAULT 'aktywny';
+
+ALTER TABLE users
+ADD COLUMN welcome_message_sent BOOLEAN NOT NULL DEFAULT FALSE;

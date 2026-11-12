@@ -1,0 +1,185 @@
+
+<!-- Biegi -->
+<div class="category-title category-title-wheel">
+    BIEGI
+</div>
+
+<div class="fields-grid fields-grid-wheel">
+
+    <!-- Wiersz 1- sposób zmiany biegów-->
+    <div class="shifting-method-row">
+
+        {% set shifting_types = [
+            ('integrated_levers', 'Klamkomanetki'),
+            ('trigger_shifters', 'Manetki'),
+            ('grip_shift', 'Manetka obrotowa'),
+            ('other', 'Inna')
+        ] %}
+
+        {% set selected_shifting = form_data.get('shifting_type', bike['shifting_type'] if bike else '') %}
+
+        <div class="field shifting-method-field">
+
+            <label for="shifting_type">SPOSÓB ZMIANY BIEGÓW **</label>
+
+            <select name="shifting_type" id="shifting_type" required>
+
+                <option value="" {% if not selected_shifting %}selected{% endif %}>
+                    Wybierz typ
+                </option>
+
+                {% for value, label in shifting_types %}
+
+                    {% if selected_shifting == value %}
+                        <option value="{{ value }}" selected="selected">
+                            {{ label }}
+                        </option>
+                    {% else %}
+                        <option value="{{ value }}">
+                            {{ label }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <!-- Wiersz 2- producent/ model, przód/ tył -->
+    <div class="shifting-components-row">
+        <!-- PRZEDNIA PRZERZUTKA -->
+        <div class="shifting-component">
+
+            <div class="field shifting-model-field">
+
+                <label for="shifting_model">PRODUCENT / MODEL BIEGÓW PRZÓD **</label>
+
+                <input
+                    type="text"
+                    name="shifting_model"
+                    id="shifting_model"
+                    required
+                    placeholder="np. Shimano GRX"
+                    value="{{ form_data.get('shifting_model', bike['shifting_model'] if bike else '') }}"
+                >
+            </div>
+        </div>
+        <!-- TYLNA PRZERZUTKA -->
+        <div class="shifting-component">
+
+            <div class="field shifting-model-field">
+
+                <label for="rear_shifting_model">PRODUCENT / MODEL BIEGÓW TYŁ **</label>
+
+                <input
+                    type="text"
+                    name="rear_shifting_model"
+                    id="rear_shifting_model"
+                    placeholder="np. Shimano GRX"
+                    value="{{ form_data.get('rear_shifting_model', bike['rear_shifting_model'] if bike else '') }}"
+                >
+            </div>
+        </div>
+    </div>
+    <!-- Wiersz data/ przebieg -->
+    <div class="shifting-details-row">
+
+        <div class="shifting-details-group">
+
+            <div class="field shifting-detail-field">
+
+                <label for="shifting_replacement_date">DATA WYMIANY PRZÓD</label>
+
+                <input
+                    type="date"
+                    name="shifting_replacement_date"
+                    id="shifting_replacement_date"
+                    value="{{ form_data.get('shifting_replacement_date',
+                     bike['shifting_replacement_date'] if bike else '') }}"
+                >
+            </div>
+            <div class="field shifting-detail-field">
+
+                <label for="shifting_mileage">PRZEBIEG OD WYMIANY</label>
+
+                <input
+                    type="number"
+                    name="shifting_mileage"
+                    id="shifting_mileage"
+                    min="0"
+                    step="1"
+                    placeholder="np. 2000"
+                    value="{{ form_data.get('shifting_mileage', bike['shifting_mileage'] if bike else '') }}"
+                >
+            </div>
+        </div>
+        <!-- TYLNA PRZERZUTKA -->
+        <div class="shifting-details-group">
+
+            <div class="field shifting-detail-field">
+
+                <label for="rear_shifting_replacement_date">DATA WYMIANY TYŁ</label>
+
+                <input
+                    type="date"
+                    name="rear_shifting_replacement_date"
+                    id="rear_shifting_replacement_date"
+                    value="{{ form_data.get('rear_shifting_replacement_date',
+                     bike['rear_shifting_replacement_date'] if bike else '') }}"
+                >
+            </div>
+            <div class="field shifting-detail-field">
+
+                <label for="rear_shifting_mileage">PRZEBIEG OD WYMIANY</label>
+
+                <input
+                    type="number"
+                    name="rear_shifting_mileage"
+                    id="rear_shifting_mileage"
+                    min="0"
+                    step="1"
+                    placeholder="np. 2000"
+                    value="{{ form_data.get('rear_shifting_mileage', bike['rear_shifting_mileage'] if bike else '') }}"
+                >
+            </div>
+        </div>
+    </div>
+
+    <!-- Wiersz 4- rodzaj przerzutki -->
+    <div class="shifting-mechanism-row">
+
+        {% set shifting_mechanisms = [
+            ('electronic', 'Elektroniczna'),
+            ('cable', 'Linka')
+        ] %}
+
+        {% set selected_mechanism = form_data.get('shifting_mechanism', bike['shifting_mechanism'] if bike else '') %}
+
+        <div class="field shifting-mechanism-field">
+
+            <label for="shifting_mechanism">RODZAJ PRZERZUTKI</label>
+
+            <select
+                name="shifting_mechanism"
+                id="shifting_mechanism"
+                required
+            >
+                <option value="" {% if not selected_mechanism %}selected{% endif %}>
+                    Wybierz rodzaj
+                </option>
+
+                {% for value, label in shifting_mechanisms %}
+
+                    {% if selected_mechanism == value %}
+                        <option value="{{ value }}" selected="selected">
+                            {{ label }}
+                        </option>
+                    {% else %}
+                        <option value="{{ value }}">
+                            {{ label }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <span style="color: white;">**Pola obowiązkowe. Pola dat i przebiegów potrzebne do analizy.</span>
+</div>

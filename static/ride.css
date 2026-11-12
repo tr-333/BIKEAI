@@ -1,0 +1,411 @@
+
+* {
+    box-sizing: border-box;
+}
+
+/* układ przycisków nawigacyjnych */
+.buttons {
+    position: absolute;
+    left: 25px;
+    top: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+/* Wspólne ustawienia przycisków nawigacyjnych */
+.add-button,
+.history-button,
+.cancel-button {
+    display: inline-block;
+    width: 170px;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+
+.add-button,
+.history-button {
+    background-color: blue;
+}
+
+.add-button:hover,
+.history-button:hover {
+    background-color: darkblue;
+}
+
+.cancel-button {
+    background-color: mediumpurple;
+}
+
+.cancel-button:hover {
+    background-color: purple;
+}
+
+/* Główna ramka formularza */
+.ride-container {
+    width: 94%;
+    max-width: 1400px;
+    margin: 10px 20px 20px 290px;
+    padding: 15px 22px;
+    border-radius: 25px;
+    background: rgba(0, 0, 0, 0.15);
+    border: 2px solid cyan;
+}
+
+.ride-container h2 {
+    margin: 0 0 30px;
+    color: darkgreen;
+    font-size: 20px;
+    text-align: center;
+}
+
+.ride-form {
+    width: 100%;
+}
+
+/* Układ sekcji formularza */
+.ride-sections {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+/* Wspólne ustawienia mniejszych ramek */
+.ride-section {
+    min-width: 0;
+    padding: 14px;
+    border: 2px solid cyan;
+    border-radius: 25px;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+/* Sekcja zajmująca całą szerokość */
+.ride-section-wide {
+    grid-column: 1 / -1;
+}
+
+.ride-section h3 {
+    margin: 0 -15px 12px;
+    padding: 0 15px 5px;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.9);
+    border-radius: 25px;
+    color: lawngreen;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* wspólne ustawienia pól formularza */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 5px;
+}
+
+.form-group > label,
+.gpx-group > label,
+.ride-name-group > label {
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+.ride-name-group input {
+    width: 100%;
+    min-width: 0;
+    padding: 8px 10px;
+    border: 1px solid cyan;
+    border-radius: 25px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.4);
+    color: black;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    text-align: center;
+}
+
+.form-group textarea {
+    text-align: left;
+
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.ride-name-group input:focus {
+    border-color: cyan;
+    box-shadow: 0 0 5px cyan;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder,
+.ride-name-group input::placeholder {
+    color: black;
+    font-size: 12px;
+}
+
+/* sekcja dane podstawowe */
+.basic-data-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 10px;
+    align-items: end;
+}
+
+.bike-group {
+    grid-column: span 2;
+}
+
+/* sekcja parametry jazdy */
+.ride-parameters-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+
+/* sekcja warunki jazdy */
+.weather-data-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.conditions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+/* Lista opcji do zaznaczania */
+.multi-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    height: 110px;
+    padding: 7px;
+    overflow-y: auto;
+    border: 1px solid grey;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Pojedyncza opcja */
+.multi-options label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 7px;
+    border-radius: 25px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* Ukrycie standardowego checkboxa */
+.multi-options input[type="checkbox"] {
+    display: none;
+}
+
+/* Wygląd zaznaczonej opcji */
+.multi-options label:has(input:checked) {
+    background: rgba(154, 205, 50, 0.5);
+    color: white;
+}
+
+/* Przewijanie listy opcji */
+.multi-options::-webkit-scrollbar {
+    width: 5px;
+}
+
+.multi-options::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.multi-options::-webkit-scrollbar-thumb {
+    border-radius: 25px;
+    background: cyan;
+}
+
+.multi-options::-webkit-scrollbar-thumb:hover {
+    background-color: darkcyan;
+}
+
+
+/* sekcja informacje dodatkowe */
+.additional-data {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 16px;
+    align-items: stretch;
+}
+
+.notes-group {
+    min-width: 0;
+    height: 20px;
+}
+
+.notes-group textarea {
+    flex: 1;
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Prawa część sekcji dodatkowej */
+.additional-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    gap: 12px;
+}
+
+/* sekcja plik gpx */
+.gpx-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 15px;
+    margin-right: 50px;
+}
+
+.gpx-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+}
+
+.gpx-group input[type="file"] {
+    width: 100%;
+    min-width: 0;
+    padding: 7px;
+    border: 1px solid cyan;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 12px;
+    text-align: center;
+}
+
+.gpx-group input[type="file"]::file-selector-button {
+    margin-right: 50px;
+}
+
+
+/* sekcja nazwy i zapisu */
+.form-actions {
+    display: flex;
+    align-items: end;
+
+}
+
+.ride-name-group {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    gap: 5px;
+}
+
+.save-button {
+    width: 110px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    background: limegreen;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.save-button:hover {
+    background-color: forestgreen;
+}
+
+/* komunikat o zapisie */
+.success-message {
+    width: fit-content;
+    max-width: 90%;
+    margin: 15px auto;
+    padding: 12px 20px;
+    border: 1px solid yellowgreen;
+    border-radius: 8px;
+    background: rgba(154, 205, 50, 0.15);
+    color: white;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* komunikat o usunięciu */
+.delete-confirmation {
+    width: 90%;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 25px;
+    border: 1px solid red;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.75);
+    text-align: center;
+}
+
+.delete-confirmation h3 {
+    margin: 0 0 20px;
+    color: white;
+    font-size: 17px;
+}
+
+.delete-confirmation form {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Wspólne ustawienia przycisków potwierdzenia */
+.confirm-delete-button,
+.cancel-delete-button {
+    min-width: 90px;
+    padding: 10px 20px;
+    border: 1px solid;
+    border-radius: 6px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.confirm-delete-button {
+    border-color: red;
+    background: rgba(255, 0, 0, 0.25);
+}
+
+.confirm-delete-button:hover {
+    background: rgba(255, 0, 0, 0.6);
+}
+
+.cancel-delete-button {
+    border-color: gray;
+    background: rgba(128, 128, 128, 0.25);
+}
+
+.cancel-delete-button:hover {
+    background: rgba(128, 128, 128, 0.55);
+}
+
+
+

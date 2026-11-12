@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='model.css') }}">
+
+    <title>MODEL AI</title>
+</head>
+<body>
+
+    <div class="model_container">
+
+        <h2>MODEL ZUŻYCIA **</h2>
+
+        <div class="model_image_frame">
+
+            <!-- Rower, wybór roweru i przyciski -->
+            <form method="POST" class="model_bike_wrapper">
+
+                <img
+                    src="{{ url_for('static', filename='model.png') }}"
+                    alt="Model roweru"
+                    class="model_bike_image"
+                >
+
+                <!-- Wybór roweru -->
+                <div class="model_bike_select">
+                    <label for="bike_choice">WYBIERZ ROWER</label>
+
+                    <select name="bike_choice" id="bike_choice">
+                        <option value="">Wybierz rower</option>
+                        <option value="bike_1">Rower 1</option>
+                        <option value="bike_2">Rower 2</option>
+                        <option value="bike_3">Rower 3</option>
+                    </select>
+                </div>
+
+                <!-- Przebieg całkowity -->
+                <div class="model_total_mileage">
+                    <span>PRZEBIEG CAŁKOWITY</span>
+                    <strong>-- km</strong>
+                </div>
+
+                <button
+                    type="submit"
+                    name="action"
+                    value="gears"
+                    class="model_button gears_button"
+                >
+                    BIEGI
+                </button>
+                <button
+                    type="submit"
+                    name="action"
+                    value="drivetrain"
+                    class="model_button drivetrain_button"
+                >
+                    NAPĘD
+                </button>
+                <button
+                    type="submit"
+                    name="action"
+                    value="front_brake"
+                    class="model_button front_brake_button"
+                >
+                    HAMULEC PRZÓD
+                </button>
+                <button
+                    type="submit"
+                    name="action"
+                    value="rear_brake"
+                    class="model_button rear_brake_button"
+                >
+                    HAMULEC TYŁ
+                </button>
+                <button
+                    type="submit"
+                    name="action"
+                    value="front_wheel"
+                    class="model_button front_wheel_button"
+                >
+                    KOŁO PRZÓD
+                </button>
+                <button
+                    type="submit"
+                    name="action"
+                    value="rear_wheel"
+                    class="model_button rear_wheel_button"
+                >
+                    KOŁO TYŁ
+                </button>
+            </form>
+
+            <!-- Wspólna ramka danych -->
+            <div class="frame_data_model">
+
+                {% if model_category %}
+
+                    <div class="model_data_content">
+
+                        <h3>{{ model_category.title }}</h3>
+
+                        <!-- Automatyczne wyświetlanie komponentów -->
+                        {% for component in model_category.components %}
+
+                            <div class="model_component">
+
+                                <h4>{{ component }}</h4>
+
+                                <div class="model_component_data">
+
+                                    <div class="model_data_field">
+                                        <span>Przebieg</span>
+                                        <strong>-- km</strong>
+                                    </div>
+
+                                    <div class="model_data_field">
+                                        <span>Kondycja</span>
+
+                                        <div class="model_battery">
+                                            <div class="model_battery_level"></div>
+                                        </div>
+                                        <strong>--%</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <!-- Uwagi AI -->
+                        <div class="model_ai_notes">
+
+                            <h4>
+                                <span>⚠</span> UWAGI AI
+                            </h4>
+                            <p>Oczekiwanie na analizę modelu.</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <span class="model_disclaimer">
+            **Analiza zużycia może się mylić.
+        </span>
+    </div>
+</body>
+</html>
