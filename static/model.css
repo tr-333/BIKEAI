@@ -272,7 +272,6 @@
     border-radius: 25px;
     overflow: hidden;
     border: 1px solid cyan;
-
     box-sizing: border-box;
 }
 
@@ -331,4 +330,66 @@
 
 .frame_data_model::-webkit-scrollbar-thumb:hover {
     background: darkcyan;
+}
+
+
+/* Pojedynczy komponent */
+.model_component {
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+    border: 1px solid cyan;
+    box-sizing: border-box;
+}
+
+/* Trzy kolumny danych */
+.model_component_data {
+    display: grid;
+    grid-template-columns: 1.1fr 0.8fr 1fr;
+    gap: 8px;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+}
+
+/* Pola danych */
+.model_data_field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+    align-items: center;
+    justify-content: flex-start;
+    color: white;
+}
+
+/* Nagłówki kolumn */
+.model_data_field span {
+    font-size: 13px;
+    color: silver;
+    text-align: center;
+}
+
+/* Wartości */
+.model_data_field strong {
+    font-size: 14px;
+    color: lawngreen;
+    text-align: center;
+}
+
+/* Nazwa komponentu */
+.model_component_name strong {
+    color: white;
+    overflow-wrap: anywhere;
+}
+
+/* Przebieg */
+.model_component_mileage {
+    align-items: center;
+}
+
+/* Kondycja */
+.model_component_condition {
+    align-items: center;
 }

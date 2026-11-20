@@ -31,17 +31,26 @@
                     <label for="bike_choice">WYBIERZ ROWER</label>
 
                     <select name="bike_choice" id="bike_choice">
+
                         <option value="">Wybierz rower</option>
-                        <option value="bike_1">Rower 1</option>
-                        <option value="bike_2">Rower 2</option>
-                        <option value="bike_3">Rower 3</option>
+
+                        {% for bike in bikes %}
+                            <option
+                                value="{{ bike.id }}"
+                                {% if selected_bike_id|string == bike.id|string %}selected{% endif %}
+                            >
+                                {{ bike.brand }} {{bike.model }}
+                            </option>
+                        {% endfor %}
                     </select>
                 </div>
 
                 <!-- Przebieg całkowity -->
                 <div class="model_total_mileage">
+
                     <span>PRZEBIEG CAŁKOWITY</span>
-                    <strong>-- km</strong>
+
+                    <strong> {{ total_mileage }} km</strong>
                 </div>
 
                 <button
@@ -108,22 +117,34 @@
 
                             <div class="model_component">
 
-                                <h4>{{ component }}</h4>
-
                                 <div class="model_component_data">
 
-                                    <div class="model_data_field">
-                                        <span>Przebieg</span>
-                                        <strong>-- km</strong>
+                                    <!-- Kolumna 1 dla komponentu -->
+                                    <div class="model_data_field model_component_name">
+
+                                        <span>{{ component.name }}</span>
+
+                                        <strong>{{ component.full_name }}</strong>
                                     </div>
 
-                                    <div class="model_data_field">
+                                    <!-- Kolumna 2 dla przebiegu -->
+                                    <div class="model_data_field model_component_mileage">
+
+                                        <span>Przebieg</span>
+
+                                        <strong>{{ component.mileage }} km</strong>
+                                    </div>
+
+                                    <!-- Kolumna 3 dla kondycji -->
+                                    <div class="model_data_field model_component_condition">
                                         <span>Kondycja</span>
 
-                                        <div class="model_battery">
-                                            <div class="model_battery_level"></div>
-                                        </div>
-                                        <strong>--%</strong>
+                                    <progress class="model_battery"
+                                              value="{{ component.condition }}"
+                                              max="100"
+                                    >
+                                    </progress>
+                                        <strong>{{ component.condition }}%</strong>
                                     </div>
                                 </div>
                             </div>
