@@ -56,10 +56,20 @@ MODEL_CATEGORIES = {
     "gears": {
         "title": "BIEGI",
         "components": [
+            ("Obsługa", "shifting_type", "shifting_mileage"),
             ("Przerzutka przód", "shifting_model", "shifting_mileage"),
             ("Przerzutka tył", "rear_shifting_model", "rear_shifting_mileage")
         ]
     }
+}
+
+# Tłumaczenie nazw komponentów
+COMPONENT_TRANSLATIONS = {
+    "integrated_levers": "Klamkomanetki",
+    "brake_levers": "Klamki hamulcowe",
+    "trigger_shifters": "Manetki",
+    "grip_shift": "Manetka obrotowa",
+    "other": "Inna"
 }
 
 # Pobieranie szczegółowej nazwy komponentu
@@ -89,7 +99,11 @@ def get_component_name(bike, field):
 
         if value:
 
-            name_parts.append(str(value).strip())
+            value = str(value).strip()
+
+            translated_value = COMPONENT_TRANSLATIONS.get(value, value)
+
+            name_parts.append(translated_value)
 
     name = " ".join(name_parts)
 
@@ -132,7 +146,7 @@ def user_analysis():
     #wybór roweru
     for bike in bikes:
 
-        if selected_bike_id is not None and bike["id"] == int(selected_bike_id):
+        if selected_bike_id and bike["id"] == int(selected_bike_id):
 
             selected_bike = bike
 
